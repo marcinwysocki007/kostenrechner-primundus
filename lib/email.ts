@@ -1215,44 +1215,38 @@ export async function sendEmail(
   attachments?: any[]
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const nodemailer = await import('nodemailer');
+    const { Resend } = await import('resend');
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const smtpPort = parseInt(process.env.SMTP_PORT || '587');
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp.ionos.de',
-      port: smtpPort,
-      secure: smtpPort === 465,
-      connectionTimeout: 8000,
-      greetingTimeout: 8000,
-      socketTimeout: 10000,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS || process.env.SMTP_PASSWORD,
-      },
-    });
+    const from = `${process.env.SMTP_FROM_NAME || 'Primundus 24h-Pflege'} <${process.env.SMTP_FROM || 'kostenrechner@primundus.de'}>`;
+    const toArray = Array.isArray(to) ? to : [to];
 
-    const mailOptions: any = {
-      from: `"${process.env.SMTP_FROM_NAME || 'Primundus 24h-Pflege'}" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
-      to,
+    const payload: any = {
+      from,
+      to: toArray,
       subject: template.subject,
       text: template.text,
       html: template.html,
     };
 
     if (attachments && attachments.length > 0) {
-      mailOptions.attachments = attachments.map((att: any) => ({
+      payload.attachments = attachments.map((att: any) => ({
         filename: att.filename,
-        content: att.content,
-        contentType: att.contentType || 'application/octet-stream',
+        content: att.content instanceof Buffer ? att.content : Buffer.from(att.content),
       }));
     }
 
-    await transporter.sendMail(mailOptions);
-    console.log(`Email sent via SMTP to: ${to}`);
+    const { error } = await resend.emails.send(payload);
+    if (error) {
+      console.error('Resend error:', error);
+      return { success: false, error: error.message };
+    }
+
+    console.log(`Email sent via Resend to: ${toArray.join(', ')}`);
     return { success: true };
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    console.error('SMTP send error:', errorMessage);
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    console.error('Resend send error:', errorMessage);
     return { success: false, error: errorMessage };
   }
 }
