@@ -21,7 +21,7 @@ const supabase = createClient(
 
 
 function getInfoCompleteness(lead: any) {
-  const p = lead.kalkulation?.patient_data || {};
+  const p = lead.patient_data || {};
   return {
     kontakt:        !!(lead.vorname && lead.nachname && lead.email),
     adresse:        !!((lead.ag_street) && (lead.ag_city)),
@@ -281,7 +281,7 @@ export default function LeadDetailPage() {
       const ep = editedPatient;
       // patient_data: full patient record
       const patient_data = {
-        ...(lead.kalkulation?.patient_data || {}),
+        ...(lead.patient_data || {}),
         care_start_date: ep.care_start_date || null,
         // Schritt 1
         anzahl:       ep.anzahl       || null,
@@ -339,16 +339,15 @@ export default function LeadDetailPage() {
         fuehrerschein:     ep.fuehrerschein     || existingFd.fuehrerschein     || null,
         geschlecht:        ep.wunschGeschlecht  || existingFd.geschlecht        || null,
       };
-      // patient_data is stored inside kalkulation (no separate column needed)
-      const existingKalk = lead.kalkulation || {};
       const update: any = {
         care_start_timing: ep.care_start_timing || null,
+        patient_data,
         patient_street: ep.strasse || null,
         patient_zip:    ep.plz    || null,
         patient_city:   ep.ort    || null,
         special_requirements: ep.sonstigeWuensche || null,
-        kalkulation: { ...existingKalk, formularDaten: newFd, patient_data },
       };
+      if (lead.kalkulation) update.kalkulation = { ...lead.kalkulation, formularDaten: newFd };
       const { error } = await supabase.from('leads').update(update).eq('id', leadId);
       if (!error) {
         await loadLeadDetails(); setIsEditingPatient(false); setEditedPatient(null);
@@ -361,7 +360,7 @@ export default function LeadDetailPage() {
   const handleRecalculateFromPatient = async () => {
     setIsRecalcFromPatient(true);
     try {
-      const p = lead.kalkulation?.patient_data || {};
+      const p = lead.patient_data || {};
       const fd = lead.kalkulation?.formularDaten || {};
       const updatedFd = { ...fd, pflegegrad: p.pflegegrad != null ? Number(p.pflegegrad) : fd.pflegegrad, mobilitaet: p.mobilitaet || fd.mobilitaet, nachteinsaetze: p.nacht || fd.nachteinsaetze, weitere_personen: p.anzahl === '2' ? 'ja' : 'nein' };
       const res = await fetch('/api/kalkulation-berechnen', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ formularDaten: updatedFd }) });
@@ -674,7 +673,7 @@ export default function LeadDetailPage() {
                 <h2 className="text-base font-semibold text-gray-900">Patient & Einsatzort</h2>
                 {!isEditingPatient && (
                   <Button variant="outline" size="sm" onClick={() => {
-                    const p = lead.kalkulation?.patient_data || {}; const fd2 = lead.kalkulation?.formularDaten || {};
+                    const p = lead.patient_data || {}; const fd2 = lead.kalkulation?.formularDaten || {};
                     setPatientEditInitial({
                       pflegegrad:  String(p.pflegegrad  ?? fd2.pflegegrad  ?? ''),
                       mobilitaet:  p.mobilitaet  || fd2.mobilitaet    || '',
@@ -1073,7 +1072,7 @@ export default function LeadDetailPage() {
                 </div>
               ) : (
                 (() => {
-                  const p  = lead.kalkulation?.patient_data || {};
+                  const p  = lead.patient_data || {};
                   const fd = lead.kalkulation?.formularDaten || {};
 
                   // Label maps
