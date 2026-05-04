@@ -142,7 +142,7 @@ export function ContractDocument({
           <p>6. Im Falle einer Arbeitsunfähigkeit der Betreuungsperson wird für die Zeit der Verhinderung kein Honorar berechnet.</p>
           <p>7. Der Anreisetag und der Abreisetag werden als volle Dienstleistungstage berechnet. Bei einem Personalwechsel wird der volle Tagessatz für beide Betreuungspersonen berechnet.</p>
           <p>8. An gesetzlichen Feiertagen wird der doppelte Tagessatz berechnet.</p>
-          <p>9. In den Sommermonaten Juli und August wird ein Sommerzuschlag von 200,00 € pro Monat (entspricht ca. 6,67 € pro Tag) berechnet.</p>
+          <p>9. In den Sommermonaten Juli und August wird ein Sommerzuschlag von 6,67 € pro Tag berechnet.</p>
           <p>10. Nach der aktuellen Gesetzeslage ist auf die Dienstleistungen des DL keine gesetzliche Mehrwertsteuer zu entrichten.</p>
           <p>11. Bei Zahlungsverzug hat der DL das Recht, Dritte mit der Rechnungsabwicklung zu beauftragen und Verzugszinsen in Höhe von 5 Prozent p. a. über dem jeweiligen Basiszinssatz zu berechnen.</p>
           <p>12. Der DL ist berechtigt, bei ausbleibender Zahlung die Betreuungsperson ersatzlos abreisen zu lassen und den Vertrag außerordentlich fristlos zu kündigen.</p>
