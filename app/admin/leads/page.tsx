@@ -160,9 +160,9 @@ export default function LeadsPage() {
             >
               Alle ({leads.length})
             </button>
-            {ALL_STATUSES.map(s => {
+            {ALL_STATUSES.filter(s => s.value !== 'info_requested').map(s => {
               const count = leads.filter(l => l.status === s.value).length;
-              if (count === 0) return null;
+              if (count === 0 && s.value !== 'vertrag_gesendet') return null;
               return (
                 <button
                   key={s.value}
