@@ -20,13 +20,18 @@ const supabase = createClient(
 );
 
 
+// Read a field from lead, falling back to patient_data JSON (for fields not yet in schema)
+function lf(lead: any, field: string, fallback = '') {
+  return lead?.[field] || lead?.patient_data?.[field] || fallback;
+}
+
 function getInfoCompleteness(lead: any) {
   const p = lead.patient_data || {};
   return {
     kontakt:        !!(lead.vorname && lead.nachname && lead.email),
-    adresse:        !!((lead.ag_street) && (lead.ag_city)),
+    adresse:        !!(lf(lead, 'ag_street') && lf(lead, 'ag_city')),
     patient:        !!(p.geburtsjahr || p.pflegegrad != null || p.mobilitaet),
-    vertragsbeginn: !!(lead.vertrags_beginn),
+    vertragsbeginn: !!(lf(lead, 'vertrags_beginn')),
   };
 }
 
@@ -201,9 +206,9 @@ export default function LeadDetailPage() {
           ag_anrede:   ld.anrede_text || ld.anrede || '',
           ag_vorname:  ld.vorname || '',
           ag_nachname: ld.nachname || '',
-          ag_street:   ld.ag_street || '',
-          ag_zip:      ld.ag_zip || '',
-          ag_city:     ld.ag_city || '',
+          ag_street:   lf(ld, 'ag_street'),
+          ag_zip:      lf(ld, 'ag_zip'),
+          ag_city:     lf(ld, 'ag_city'),
           ag_email:    ld.email || '',
           ag_telefon:  ld.telefon || '',
           le_abweichend: (ld.patient_vorname || ld.patient_nachname || pd.patient_vorname) ? 'ja' : 'nein',
@@ -213,11 +218,11 @@ export default function LeadDetailPage() {
           le_street:   ld.patient_street || pd.strasse || '',
           le_zip:      ld.patient_zip || pd.plz || '',
           le_city:     ld.patient_city || pd.ort || '',
-          vertrags_beginn:     ld.vertrags_beginn || '',
-          vertrags_dauer_typ:  ld.vertrags_ende ? 'datum' : 'unbegrenzt',
-          vertrags_ende:       ld.vertrags_ende || '',
-          tagessatz_override:  ld.tagessatz_override || '',
-          ort_unterzeichnung:  ld.ort_unterzeichnung || '',
+          vertrags_beginn:     lf(ld, 'vertrags_beginn'),
+          vertrags_dauer_typ:  lf(ld, 'vertrags_ende') ? 'datum' : 'unbegrenzt',
+          vertrags_ende:       lf(ld, 'vertrags_ende'),
+          tagessatz_override:  lf(ld, 'tagessatz_override'),
+          ort_unterzeichnung:  lf(ld, 'ort_unterzeichnung'),
           _bruttoGesamt: bruttoGesamt,
         });
       }
@@ -259,16 +264,14 @@ export default function LeadDetailPage() {
       const extra: any = {};
       if (editedContact.email   !== lead.email)   extra.email   = editedContact.email   || null;
       if (editedContact.telefon !== lead.telefon) extra.telefon = editedContact.telefon || null;
-      extra.ag_street = editedContact.ag_street || null;
-      extra.ag_zip    = editedContact.ag_zip    || null;
-      extra.ag_city   = editedContact.ag_city   || null;
-      const { error } = await supabase.from('leads').update(extra).eq('id', leadId);
-      if (error?.message?.includes('ag_street')) {
-        const safe: any = {};
-        if (editedContact.email   !== lead.email)   safe.email   = editedContact.email   || null;
-        if (editedContact.telefon !== lead.telefon) safe.telefon = editedContact.telefon || null;
-        if (Object.keys(safe).length) await supabase.from('leads').update(safe).eq('id', leadId);
-      }
+      // Store ag address in patient_data JSON (columns not yet in schema)
+      extra.patient_data = {
+        ...(lead.patient_data || {}),
+        ag_street: editedContact.ag_street || null,
+        ag_zip:    editedContact.ag_zip    || null,
+        ag_city:   editedContact.ag_city   || null,
+      };
+      await supabase.from('leads').update(extra).eq('id', leadId);
       await loadLeadDetails(); setIsEditingContact(false); setEditedContact(null);
     } catch (e) { console.error(e); }
     setIsSavingContact(false);
@@ -389,24 +392,23 @@ export default function LeadDetailPage() {
     if (!vertragVars) return;
     setVertragSaving(true);
     try {
+      // Store all contract fields in patient_data JSON (columns not yet in schema)
       const update: any = {
-        vertrags_beginn:    vertragVars.vertrags_beginn || null,
-        vertrags_ende:      vertragVars.vertrags_dauer_typ === 'datum' ? (vertragVars.vertrags_ende || null) : null,
-        ort_unterzeichnung: vertragVars.ort_unterzeichnung || null,
-        tagessatz_override: vertragVars.tagessatz_override ? parseFloat(vertragVars.tagessatz_override) : null,
-        ag_street: vertragVars.ag_street || null,
-        ag_zip:    vertragVars.ag_zip || null,
-        ag_city:   vertragVars.ag_city || null,
         patient_street: vertragVars.le_street || null,
-        patient_zip:    vertragVars.le_zip || null,
-        patient_city:   vertragVars.le_city || null,
+        patient_zip:    vertragVars.le_zip    || null,
+        patient_city:   vertragVars.le_city   || null,
+        patient_data: {
+          ...(lead.patient_data || {}),
+          ag_street:          vertragVars.ag_street || null,
+          ag_zip:             vertragVars.ag_zip    || null,
+          ag_city:            vertragVars.ag_city   || null,
+          vertrags_beginn:    vertragVars.vertrags_beginn || null,
+          vertrags_ende:      vertragVars.vertrags_dauer_typ === 'datum' ? (vertragVars.vertrags_ende || null) : null,
+          ort_unterzeichnung: vertragVars.ort_unterzeichnung || null,
+          tagessatz_override: vertragVars.tagessatz_override ? parseFloat(vertragVars.tagessatz_override) : null,
+        },
       };
-      const { error } = await supabase.from('leads').update(update).eq('id', leadId);
-      if (error) {
-        const safe: any = {};
-        if (!error.message.includes('vertrags_beginn')) safe.vertrags_beginn = update.vertrags_beginn;
-        if (Object.keys(safe).length) await supabase.from('leads').update(safe).eq('id', leadId);
-      }
+      await supabase.from('leads').update(update).eq('id', leadId);
       setVertragSaved(true);
       setTimeout(() => setVertragSaved(false), 3000);
       await loadLeadDetails();
@@ -603,7 +605,7 @@ export default function LeadDetailPage() {
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-base font-semibold text-gray-900">Kontaktdaten</h2>
                 {!isEditingContact && (
-                  <Button variant="outline" size="sm" onClick={() => { setEditedContact({ vorname: lead.vorname||'', nachname: lead.nachname||'', anrede: lead.anrede||'', anrede_text: lead.anrede_text||'', email: lead.email||'', telefon: lead.telefon||'', ag_street: lead.ag_street||'', ag_zip: lead.ag_zip||'', ag_city: lead.ag_city||'' }); setIsEditingContact(true); }} className="flex items-center gap-1.5 text-xs">
+                  <Button variant="outline" size="sm" onClick={() => { setEditedContact({ vorname: lead.vorname||'', nachname: lead.nachname||'', anrede: lead.anrede||'', anrede_text: lead.anrede_text||'', email: lead.email||'', telefon: lead.telefon||'', ag_street: lf(lead,'ag_street'), ag_zip: lf(lead,'ag_zip'), ag_city: lf(lead,'ag_city') }); setIsEditingContact(true); }} className="flex items-center gap-1.5 text-xs">
                     <Edit className="w-3.5 h-3.5" />Bearbeiten
                   </Button>
                 )}
@@ -658,8 +660,8 @@ export default function LeadDetailPage() {
                   {lead.anrede_text && <div><p className="text-xs text-gray-400">Individuelle Anrede</p><p className="text-sm font-medium">{lead.anrede_text}</p></div>}
                   <div><p className="text-xs text-gray-400">E-Mail</p><p className="text-sm font-medium">{lead.email}</p></div>
                   {lead.telefon     && <div><p className="text-xs text-gray-400">Telefon</p><p className="text-sm font-medium">{lead.telefon}</p></div>}
-                  {(lead.ag_street || lead.ag_city) ? (
-                    <div className="col-span-2"><p className="text-xs text-gray-400">Anschrift AG</p><p className="text-sm font-medium">{[lead.ag_street, [lead.ag_zip, lead.ag_city].filter(Boolean).join(' ')].filter(Boolean).join(', ')}</p></div>
+                  {(lf(lead,'ag_street') || lf(lead,'ag_city')) ? (
+                    <div className="col-span-2"><p className="text-xs text-gray-400">Anschrift AG</p><p className="text-sm font-medium">{[lf(lead,'ag_street'), [lf(lead,'ag_zip'), lf(lead,'ag_city')].filter(Boolean).join(' ')].filter(Boolean).join(', ')}</p></div>
                   ) : (
                     <div className="col-span-2 text-xs text-amber-600 italic flex items-center gap-1"><AlertTriangle className="w-3.5 h-3.5" />Anschrift für Vertrag noch nicht hinterlegt</div>
                   )}

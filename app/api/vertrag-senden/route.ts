@@ -8,11 +8,17 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+// Read field from lead, falling back to patient_data JSON
+function lf(lead: any, field: string, fallback: any = null) {
+  return lead?.[field] ?? lead?.patient_data?.[field] ?? fallback;
+}
+
 function buildContractHtml(lead: any): string {
   const kalk = lead.kalkulation || {};
   const bruttoGesamt = kalk.bruttopreis ?? kalk.totalGross ?? kalk.gesamtpreis ?? kalk.bruttoGesamt ?? 0;
-  const tagessatz = lead.tagessatz_override
-    ? parseFloat(lead.tagessatz_override)
+  const tagessatzOverride = lf(lead, 'tagessatz_override');
+  const tagessatz = tagessatzOverride
+    ? parseFloat(tagessatzOverride)
     : bruttoGesamt > 0 ? bruttoGesamt / 30 : 0;
   const tagessatzFmt = tagessatz > 0
     ? tagessatz.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'
@@ -22,15 +28,16 @@ function buildContractHtml(lead: any): string {
     ? new Date(d).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })
     : '_______________';
 
-  const vertragsBeginn = fmtDate(lead.vertrags_beginn);
-  const vertragsDauer = lead.vertrags_ende
-    ? `bis zum ${fmtDate(lead.vertrags_ende)} befristet`
+  const vertragsBeginn = fmtDate(lf(lead, 'vertrags_beginn'));
+  const vertragsEnde = lf(lead, 'vertrags_ende');
+  const vertragsDauer = vertragsEnde
+    ? `bis zum ${fmtDate(vertragsEnde)} befristet`
     : 'auf unbestimmte Zeit';
   const today = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  const ortUnterschrift = lead.ort_unterzeichnung || '________________________';
+  const ortUnterschrift = lf(lead, 'ort_unterzeichnung') || '________________________';
 
   const agName = [lead.anrede_text || lead.anrede, lead.vorname, lead.nachname].filter(Boolean).join(' ');
-  const agAdresse = [lead.ag_street, [lead.ag_zip, lead.ag_city].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+  const agAdresse = [lf(lead,'ag_street'), [lf(lead,'ag_zip'), lf(lead,'ag_city')].filter(Boolean).join(' ')].filter(Boolean).join(', ');
 
   const pd = lead.patient_data || {};
   const leVorname = lead.patient_vorname || pd.patient_vorname || '';
@@ -268,8 +275,9 @@ export async function POST(request: NextRequest) {
     // Build contract variables for email summary
     const kalk = lead.kalkulation || {};
     const bruttoGesamt = kalk.bruttopreis ?? kalk.totalGross ?? kalk.gesamtpreis ?? kalk.bruttoGesamt ?? 0;
-    const tagessatz = lead.tagessatz_override
-      ? parseFloat(lead.tagessatz_override)
+    const tagessatzOverride = lf(lead, 'tagessatz_override');
+    const tagessatz = tagessatzOverride
+      ? parseFloat(tagessatzOverride)
       : bruttoGesamt > 0 ? bruttoGesamt / 30 : 0;
     const tagessatzFmt = tagessatz > 0
       ? tagessatz.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'
@@ -287,15 +295,16 @@ export async function POST(request: NextRequest) {
     const leName = [leAnrede, leVorname, leNachname].filter(Boolean).join(' ');
     const leIsAbweichend = !!(leVorname || leNachname);
 
-    const vertragsDauer = lead.vertrags_ende
-      ? `bis zum ${fmtDate(lead.vertrags_ende)} befristet`
+    const vertragsEnde = lf(lead, 'vertrags_ende');
+    const vertragsDauer = vertragsEnde
+      ? `bis zum ${fmtDate(vertragsEnde)} befristet`
       : 'Auf unbestimmte Zeit';
 
     // Build email template
     const emailTemplate = getVertragEmailTemplate(lead, {
       subject,
       anschreiben,
-      vertragsBeginn: fmtDate(lead.vertrags_beginn),
+      vertragsBeginn: fmtDate(lf(lead, 'vertrags_beginn')),
       vertragsDauer,
       tagessatz: tagessatzFmt,
       agName,
