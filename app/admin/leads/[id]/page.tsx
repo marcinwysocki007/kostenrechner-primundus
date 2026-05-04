@@ -1568,27 +1568,25 @@ export default function LeadDetailPage() {
                   </div>
                 </Card>
                 <Card className="p-5">
-                  <h3 className="font-semibold text-sm text-[#5C4A32] uppercase tracking-wide mb-4 flex items-center gap-2"><FileText className="w-4 h-4" />E-Mail-Vorlage</h3>
-                  <div className="space-y-4">
-                    <div>
-                      <label className="text-xs text-gray-600 block mb-1">Betreff</label>
-                      <input type="text" value={versandBetreff} onChange={e => { setVersandBetreff(e.target.value); setSendResult(null); }} placeholder="Ihr Dienstleistungsvertrag – PRIMUNDUS Deutschland" className={inp2} />
-                    </div>
-                    <div>
-                      <label className="text-xs text-gray-600 block mb-1">Anschreiben <span className="text-gray-400">(leer = Standard)</span></label>
-                      <textarea rows={5} value={versandAnschreiben} onChange={e => { setVersandAnschreiben(e.target.value); setSendResult(null); setShowEmailPreview(false); }} className={`${inp2} resize-none`} />
-                    </div>
+                  <h3 className="font-semibold text-sm text-[#5C4A32] uppercase tracking-wide mb-3 flex items-center gap-2"><FileText className="w-4 h-4" />E-Mail-Inhalt</h3>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <p className="text-gray-500">Die E-Mail wird automatisch generiert mit:</p>
+                    <ul className="list-none space-y-1.5 mt-2">
+                      {[
+                        `Tagessatz: ${tagessatzFmt || 'Gemäß Vertrag § 4'}`,
+                        'Fahrtkosten: 125 € je Strecke',
+                        'Kost & Logis: Frei für die Betreuungsperson',
+                        'Feiertage: Doppelter Tagessatz (§ 4.8)',
+                        'Sommermonate Juli & August: +200 €/Monat (§ 4.9)',
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <span className="text-[#B5A184] mt-0.5">✓</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </Card>
-                <button onClick={() => setShowEmailPreview(v => !v)}
-                  className="w-full py-2.5 rounded-lg border border-gray-300 text-sm text-gray-700 hover:border-[#5C4A32] hover:text-[#5C4A32] transition-colors flex items-center justify-center gap-2">
-                  <FileText className="w-4 h-4" />{showEmailPreview ? 'Vorschau schließen' : 'E-Mail-Vorschau anzeigen'}
-                </button>
-                {showEmailPreview && (
-                  <Card className="overflow-hidden">
-                    <EmailPreviewFrame lead={lead} agName={agName} versandBetreff={versandBetreff} versandAnschreiben={versandAnschreiben} tagessatzFmt={tagessatzFmt} vertragsBeginnFmt={vertragsBeginnFmt} vertragsDauerFmt={vertragsDauerFmt} />
-                  </Card>
-                )}
                 <Button onClick={handleSendVertrag} disabled={isSendingVertrag}
                   className="w-full bg-[#5C4A32] hover:bg-[#4A3A28] text-white flex items-center justify-center gap-2 py-3">
                   {isSendingVertrag ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}

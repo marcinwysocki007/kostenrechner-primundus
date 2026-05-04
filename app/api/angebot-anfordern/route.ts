@@ -9,6 +9,7 @@ import {
   getAngebotsEmailTemplate,
 } from '@/lib/email';
 import { detectGenderFromName } from '@/lib/calculation';
+import { generatePDFForLead } from '@/lib/pdf-generator-pdfkit';
 
 function getSupabaseClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -187,7 +188,24 @@ async function handleSendAngebotsEmailOnly(leadId: string, isResend = false) {
     }
 
     const angebotsEmail = getAngebotsEmailTemplate(lead, lead.kalkulation, { isResend });
-    const emailResult = await sendEmail(lead.email, angebotsEmail);
+
+    // Generate PDF attachment
+    let pdfAttachments: any[] | undefined;
+    try {
+      const pdfBuffer = await generatePDFForLead(lead);
+      if (pdfBuffer) {
+        const namePart = [lead.vorname, lead.nachname].filter(Boolean).join('_');
+        pdfAttachments = [{
+          filename: `Primundus_Angebot${namePart ? `_${namePart}` : ''}.pdf`,
+          content: pdfBuffer,
+          contentType: 'application/pdf',
+        }];
+      }
+    } catch (pdfErr) {
+      console.error('⚠️ PDF-Generierung fehlgeschlagen (Mail wird trotzdem gesendet):', pdfErr);
+    }
+
+    const emailResult = await sendEmail(lead.email, angebotsEmail, pdfAttachments);
 
     if (emailResult.success) {
       await logEvent(lead.id, 'email_angebot_sent', {

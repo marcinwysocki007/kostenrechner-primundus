@@ -30,6 +30,50 @@ function formatDate(date: Date): string {
   return format(date, 'dd.MM.yyyy');
 }
  
+/**
+ * Convenience wrapper: takes a raw lead object (from Supabase) and returns a PDF buffer.
+ * Returns null if the lead has no kalkulation data.
+ */
+export async function generatePDFForLead(lead: any): Promise<Buffer | null> {
+  const kalk = lead?.kalkulation;
+  if (!kalk) return null;
+
+  const formData = kalk.formularDaten || kalk.formular_daten || {};
+  const MOBILITY: Record<string, string> = {
+    mobil: 'Mobil', rollator: 'Rollator', rollstuhl: 'Rollstuhl', bettlaegerig: 'Bettlägerig',
+  };
+  const NACHT: Record<string, string> = {
+    nein: 'Nein', gelegentlich: 'Gelegentlich', taeglich: 'Täglich', mehrmals: 'Mehrmals',
+  };
+  const DEUTSCH: Record<string, string> = {
+    grundlegend: 'Grundlegend', kommunikativ: 'Kommunikativ', 'sehr-gut': 'Gut',
+  };
+
+  const leadData: LeadData = {
+    betreuungFuer: formData.betreuung_fuer === 'ehepaar' ? '2 Personen' : '1 Person',
+    pflegegrad: Number(formData.pflegegrad) || 0,
+    mobilitaet: MOBILITY[formData.mobilitaet] || formData.mobilitaet || 'Nicht angegeben',
+    nachteinsaetze: NACHT[formData.nachteinsaetze] || formData.nachteinsaetze || 'Nicht angegeben',
+    deutschkenntnisse: DEUTSCH[formData.deutschkenntnisse] || formData.deutschkenntnisse || 'Nicht angegeben',
+    erfahrung: formData.erfahrung || 'Keine Anforderung',
+    vertragsLink: undefined,
+  };
+
+  const pflegegeld = kalk.zuschüsse?.items?.find((z: any) => z.name === 'pflegegeld')?.betrag_monatlich || 0;
+  const entlastungsbudget = kalk.zuschüsse?.items?.find((z: any) => z.name === 'entlastungsbudget_neu')?.betrag_monatlich || 0;
+  const steuervorteil = kalk.zuschüsse?.items?.find((z: any) => z.name === 'steuervorteil')?.betrag_monatlich || 0;
+
+  const kalkulationData: KalkulationData = {
+    bruttopreis: kalk.bruttopreis || 0,
+    pflegegeld,
+    entlastungsbudgetMtl: entlastungsbudget,
+    steuervorteil,
+    eigenanteil: kalk.eigenanteil || 0,
+  };
+
+  return generateKalkulationPDF(leadData, kalkulationData);
+}
+
 export async function generateKalkulationPDF(
   lead: LeadData,
   kalkulation: KalkulationData
