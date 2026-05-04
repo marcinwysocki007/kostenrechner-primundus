@@ -37,7 +37,8 @@ function buildContractHtml(lead: any): string {
   const ortUnterschrift = lf(lead, 'ort_unterzeichnung') || '________________________';
 
   const agName = [lead.anrede_text || lead.anrede, lead.vorname, lead.nachname].filter(Boolean).join(' ');
-  const agAdresse = [lf(lead,'ag_street'), [lf(lead,'ag_zip'), lf(lead,'ag_city')].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+  const agStreet = lf(lead,'ag_street') || '';
+  const agZipCity = [lf(lead,'ag_zip'), lf(lead,'ag_city')].filter(Boolean).join(' ');
 
   const pd = lead.patient_data || {};
   const leVorname = lead.patient_vorname || pd.patient_vorname || '';
@@ -47,7 +48,7 @@ function buildContractHtml(lead: any): string {
   const leStreet = lead.patient_street || pd.strasse || '';
   const leZip = lead.patient_zip || pd.plz || '';
   const leCity = lead.patient_city || pd.ort || '';
-  const leAdresse = [leStreet, [leZip, leCity].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+  const leZipCity = [leZip, leCity].filter(Boolean).join(' ');
   const leIsAbweichend = !!(leVorname || leNachname);
 
   const fieldBlank = (val: string) =>
@@ -59,7 +60,7 @@ function buildContractHtml(lead: any): string {
       ${italic
         ? `<div style="font-size:11pt;color:#999;font-style:italic;padding-top:3pt;">${name}</div>`
         : `<div style="font-weight:bold;font-size:13pt;margin-bottom:3pt;">${name || '<span style="color:#ccc;font-weight:normal;font-style:italic;">Name nicht hinterlegt</span>'}</div>`}
-      ${details.filter(Boolean).map(d => `<div style="font-size:11pt;color:#444;line-height:1.45;">${d}</div>`).join('')}
+      ${details.filter(Boolean).map(d => `<div style="font-size:12pt;color:#333;line-height:1.6;margin-top:2pt;">${d}</div>`).join('')}
     </div>`;
 
   const h2 = (text: string) =>
@@ -88,7 +89,7 @@ function buildContractHtml(lead: any): string {
     </div>`;
 
   const page = (content: string, pageNum: string) =>
-    `<div style="max-width:210mm;min-height:297mm;margin:0 auto 20px;padding:18mm 22mm 18mm 25mm;background:white;box-shadow:0 4px 24px rgba(0,0,0,0.1);display:flex;flex-direction:column;box-sizing:border-box;font-family:'Times New Roman',Times,serif;font-size:12pt;color:#1a1a1a;line-height:1.65;">
+    `<div style="max-width:210mm;min-height:297mm;margin:0 auto 20px;padding:18mm 22mm 18mm 25mm;background:white;box-shadow:0 4px 24px rgba(0,0,0,0.1);display:flex;flex-direction:column;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11.5pt;color:#1a1a1a;line-height:1.65;">
       ${content}
       ${footer(pageNum)}
     </div>`;
@@ -106,11 +107,11 @@ function buildContractHtml(lead: any): string {
       <hr style="border:none;border-top:1px solid #c8b89a;margin:8pt auto;width:60pt;"/>
       <p style="text-align:center;font-size:12pt;color:#555;margin:0 0 18pt;">geschlossen zwischen den folgenden Vertragsparteien</p>
     </div>
-    ${partyBlock('Auftraggeber (AG)', agName, [agAdresse, lead.email, lead.telefon].filter(Boolean))}
+    ${partyBlock('Auftraggeber (AG)', agName, [agStreet, agZipCity, lead.email, lead.telefon].filter(Boolean))}
     <p style="text-align:center;font-size:11pt;color:#666;margin:5pt 0;">im Folgenden <strong>Auftraggeber (AG)</strong> genannt</p>
     ${leIsAbweichend
-      ? partyBlock('Leistungsempfänger (LE)', leName, [leAdresse].filter(Boolean))
-      : partyBlock('Leistungsempfänger (LE) — identisch mit AG', leIsAbweichend ? leName : (agName || 'wie Auftraggeber'), [agAdresse].filter(Boolean), true)}
+      ? partyBlock('Leistungsempfänger (LE)', leName, [leStreet, leZipCity].filter(Boolean))
+      : partyBlock('Leistungsempfänger (LE) — identisch mit AG', leIsAbweichend ? leName : (agName || 'wie Auftraggeber'), [agStreet, agZipCity].filter(Boolean), true)}
     <p style="text-align:center;font-size:11pt;color:#666;margin:5pt 0;">im Folgenden <strong>Leistungsempfänger (LE)</strong> genannt</p>
     <p style="text-align:center;font-weight:bold;font-size:13pt;color:#5C4A32;margin:8pt 0;letter-spacing:1px;">— und —</p>
     ${partyBlock('Dienstleister (DL)', 'PRIMUNDUS Deutschland', ['VITANAS GROUP sp. z o. o · Poznanska 21/48, 00-685 Warszawa', 'Stat. Register: REGON 526823071'])}
@@ -146,7 +147,7 @@ function buildContractHtml(lead: any): string {
     ${p('6. Die Abwesenheit des LE am Leistungsort bis zu 7 Tagen lässt den Vertragsbestand unberührt. Ab dem 8. Tag ruht der Vertrag kostenlos für den AG bis die Betreuung wieder fortgesetzt wird.')}
     ${p('7. Bei Beschwerden über die Erbringung der vereinbarten Leistungen ist der DL unverzüglich zu informieren. Eine Minderung kann nur erfolgen, wenn der Minderungsgrund innerhalb von 5 Tagen angezeigt wurde und zwischen den Parteien unstrittig ist.')}
     ${h2('§ 4 Vergütung')}
-    ${p(`1. Der DL erhält für die vereinbarten Dienstleistungen eine Vergütung von <strong>${fieldBlank(tagessatzFmt)} pro Tag (Tagessatz)</strong> zzgl. Reisekostenvergütung (für den internationalen Flugverkehr nach/von Mallorca). Im Falle einer unvorhersehbaren Verkürzung der Einsatzzeit auf Wunsch des AG wird eine Reisekostenvergütungspauschale von EUR 125,00 berechnet.`)}
+    ${p(`1. Der DL erhält für die vereinbarten Dienstleistungen eine Vergütung von <strong>${fieldBlank(tagessatzFmt)} pro Tag (Tagessatz)</strong> zzgl. einer Reisekostenpauschale i.H.v. EUR 125,00 pro Fahrt. An gesetzlichen Feiertagen gilt der doppelte Tagessatz (§ 4.8). In den Monaten Juli und August wird ein Sommerzuschlag von EUR 200,00/Monat berechnet (§ 4.9).`)}
     ${p('2. Die Vergütung wird berechnet ab dem Tag der Ankunft der Betreuungsperson am Leistungsort.')}
     ${p('3. Beginnt oder endet die Vertragslaufzeit im Laufe eines Monats, erfolgt eine anteilige Berechnung der vereinbarten Vergütung.')}
     ${p('4. Die Rechnungen werden monatlich zum 15. ausgestellt. Der Rechnungsbetrag ist bis spätestens 7 Tage nach Erhalt zu überweisen.')}
