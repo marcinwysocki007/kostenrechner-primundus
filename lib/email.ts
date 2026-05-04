@@ -1210,7 +1210,7 @@ export async function sendConfirmationEmail(data: {
 }
 
 export async function sendEmail(
-  to: string,
+  to: string | string[],
   template: EmailTemplate,
   attachments?: any[]
 ): Promise<{ success: boolean; error?: string }> {

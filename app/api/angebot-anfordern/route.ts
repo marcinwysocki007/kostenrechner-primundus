@@ -205,16 +205,18 @@ async function handleSendAngebotsEmailOnly(leadId: string, isResend = false) {
       console.error('⚠️ PDF-Generierung fehlgeschlagen (Mail wird trotzdem gesendet):', pdfErr);
     }
 
-    const emailResult = await sendEmail(lead.email, angebotsEmail, pdfAttachments);
+    const email2 = lead?.patient_data?.email2;
+    const recipients = [lead.email, email2].filter(Boolean);
+    const emailResult = await sendEmail(recipients.length > 1 ? recipients : lead.email, angebotsEmail, pdfAttachments);
 
     if (emailResult.success) {
       await logEvent(lead.id, 'email_angebot_sent', {
-        to: lead.email,
+        to: recipients.join(', '),
         triggered_by: isResend ? 'admin_resend' : 'scheduled_email',
       });
     } else {
       await logEvent(lead.id, 'email_angebot_failed', {
-        to: lead.email,
+        to: recipients.join(', '),
         error: emailResult.error,
         triggered_by: isResend ? 'admin_resend' : 'scheduled_email',
       });

@@ -270,6 +270,7 @@ export default function LeadDetailPage() {
         ag_street: editedContact.ag_street || null,
         ag_zip:    editedContact.ag_zip    || null,
         ag_city:   editedContact.ag_city   || null,
+        email2:    editedContact.email2    || null,
       };
       await supabase.from('leads').update(extra).eq('id', leadId);
       await loadLeadDetails(); setIsEditingContact(false); setEditedContact(null);
@@ -563,6 +564,7 @@ export default function LeadDetailPage() {
               </span>
               <span className="text-xs text-gray-400"><Calendar className="w-3 h-3 inline mr-1" />{new Date(lead.created_at).toLocaleDateString('de-DE')}</span>
               {lead.email   && <span className="text-xs text-gray-400"><Mail className="w-3 h-3 inline mr-1" />{lead.email}</span>}
+              {lf(lead,'email2') && <span className="text-xs text-gray-400"><Mail className="w-3 h-3 inline mr-1" />{lf(lead,'email2')} <span className="text-gray-300">(CC)</span></span>}
               {lead.telefon && <span className="text-xs text-gray-400"><Phone className="w-3 h-3 inline mr-1" />{lead.telefon}</span>}
             </div>
           </div>
@@ -605,7 +607,7 @@ export default function LeadDetailPage() {
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-base font-semibold text-gray-900">Kontaktdaten</h2>
                 {!isEditingContact && (
-                  <Button variant="outline" size="sm" onClick={() => { setEditedContact({ vorname: lead.vorname||'', nachname: lead.nachname||'', anrede: lead.anrede||'', anrede_text: lead.anrede_text||'', email: lead.email||'', telefon: lead.telefon||'', ag_street: lf(lead,'ag_street'), ag_zip: lf(lead,'ag_zip'), ag_city: lf(lead,'ag_city') }); setIsEditingContact(true); }} className="flex items-center gap-1.5 text-xs">
+                  <Button variant="outline" size="sm" onClick={() => { setEditedContact({ vorname: lead.vorname||'', nachname: lead.nachname||'', anrede: lead.anrede||'', anrede_text: lead.anrede_text||'', email: lead.email||'', email2: lf(lead,'email2'), telefon: lead.telefon||'', ag_street: lf(lead,'ag_street'), ag_zip: lf(lead,'ag_zip'), ag_city: lf(lead,'ag_city') }); setIsEditingContact(true); }} className="flex items-center gap-1.5 text-xs">
                     <Edit className="w-3.5 h-3.5" />Bearbeiten
                   </Button>
                 )}
@@ -637,6 +639,7 @@ export default function LeadDetailPage() {
                     <div><label className="text-xs text-gray-500 block mb-1">E-Mail</label><input type="email" value={editedContact.email||''} onChange={e => setEditedContact({ ...editedContact, email: e.target.value })} className={inp} /></div>
                     <div><label className="text-xs text-gray-500 block mb-1">Telefon</label><input type="tel" value={editedContact.telefon||''} onChange={e => setEditedContact({ ...editedContact, telefon: e.target.value })} className={inp} /></div>
                   </div>
+                  <div><label className="text-xs text-gray-500 block mb-1">2. E-Mail <span className="text-gray-400">(Angebot &amp; Vertrag ebenfalls an diese Adresse)</span></label><input type="email" value={editedContact.email2||''} onChange={e => setEditedContact({ ...editedContact, email2: e.target.value })} className={inp} /></div>
                   <div>
                     <p className="text-xs font-semibold text-[#5C4A32] uppercase tracking-wide mb-2">Anschrift AG (für Vertrag)</p>
                     <input type="text" placeholder="Straße + Nr." value={editedContact.ag_street||''} onChange={e => setEditedContact({ ...editedContact, ag_street: e.target.value })} className={`${inp} mb-2`} />

@@ -363,9 +363,13 @@ export async function POST(request: NextRequest) {
     const contractPdf = await htmlToPdf(contractHtml);
     const contractFilename = `Dienstleistungsvertrag_${(lead.nachname || lead.vorname || 'Primundus').replace(/\s+/g, '_')}.pdf`;
 
+    // Collect recipients (primary + optional 2nd email)
+    const email2 = lf(lead, 'email2');
+    const recipients = [lead.email, email2].filter(Boolean);
+
     // Send email with PDF attachment
     const emailResult = await sendEmail(
-      lead.email,
+      recipients.length > 1 ? recipients : lead.email,
       emailTemplate,
       [{ filename: contractFilename, content: contractPdf, contentType: 'application/pdf' }]
     );
