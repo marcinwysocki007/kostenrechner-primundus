@@ -481,41 +481,83 @@ export function getAngebotsEmailTemplate(
       <p style="color: #555; font-size: 15px; margin: 0; line-height: 1.6;">Für Sie bleibt selbstverständlich alles <strong>unverbindlich</strong>, bis Sie sich für eine passende Betreuungskraft entscheiden und diese anreist.</p>
     </div>
 
-    <!-- Ilka CTA -->
-    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin: 35px 0; border: 1px solid #e8ddd0; border-radius: 10px; overflow: hidden;">
+    <!-- Ilka CTA – wie auf der Website -->
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin: 35px 0; border: 1px solid #e8ddd0; border-radius: 12px; overflow: hidden;">
+      <!-- Label -->
       <tr>
-        <td style="padding: 24px;">
+        <td style="padding: 16px 24px 0; background: #ffffff;">
+          <p style="margin: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #9a8a73; text-transform: uppercase; text-align: left;">KOSTENLOSE BERATUNG</p>
+        </td>
+      </tr>
+      <!-- Ilka + Buttons + Badge -->
+      <tr>
+        <td style="padding: 16px 24px 20px; background: #ffffff;">
           <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
             <tr>
-              <td style="vertical-align: top; padding-right: 20px; width: 90px;">
-                <img src="${baseUrl}/images/ilka-wysocki_pm-mallorca.webp" alt="Ilka Wysocki" width="80" height="80"
-                  style="border-radius: 50%; width: 80px; height: 80px; object-fit: cover; display: block; border: 2px solid #B5A184;" />
-              </td>
-              <td style="vertical-align: top;">
-                <p style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #3D2B1F;">Ilka Wysocki</p>
-                <p style="margin: 0 0 14px 0; font-size: 13px; color: #9a8a73;">Gründerin & Geschäftsführerin, Primundus</p>
-                <p style="margin: 0 0 16px 0; font-size: 15px; color: #555; line-height: 1.6;">
-                  Haben Sie Fragen zu Ihrem Angebot? Ich bin persönlich für Sie da.
-                </p>
+              <!-- Photo + Info -->
+              <td style="vertical-align: middle; width: 200px;">
                 <table cellpadding="0" cellspacing="0" role="presentation">
                   <tr>
-                    <td style="padding-right: 10px; padding-bottom: 8px;">
-                      <a href="tel:+4989200000830"
-                        style="display: inline-block; background-color: #3D2B1F; color: #ffffff; text-decoration: none; padding: 9px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; white-space: nowrap;">
-                        📞 +49 89 200 000 830
-                      </a>
+                    <td style="padding-right: 14px; vertical-align: middle;">
+                      <img src="${baseUrl}/images/ilka-wysocki_pm-mallorca.webp" alt="Ilka Wysocki" width="56" height="56"
+                        style="display: block; width: 56px; height: 56px; border-radius: 8px; object-fit: cover;" />
                     </td>
-                    <td style="padding-bottom: 8px;">
-                      <a href="https://wa.me/4989200000830"
-                        style="display: inline-block; background-color: #25D366; color: #ffffff; text-decoration: none; padding: 9px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; white-space: nowrap;">
-                        💬 WhatsApp
-                      </a>
+                    <td style="vertical-align: middle;">
+                      <p style="margin: 0 0 2px 0; font-size: 15px; font-weight: 700; color: #3D2B1F; text-align: left;">Ilka Wysocki</p>
+                      <p style="margin: 0 0 2px 0; font-size: 13px; color: #555; text-align: left;">Pflegeberaterin</p>
+                      <p style="margin: 0; font-size: 12px; color: #9a8a73; text-align: left;">Mo – So, 8 – 20 Uhr</p>
                     </td>
                   </tr>
                 </table>
               </td>
+              <!-- Phone + WA buttons -->
+              <td style="vertical-align: middle; text-align: center; width: 110px;">
+                <table cellpadding="0" cellspacing="0" role="presentation" style="margin: 0 auto;">
+                  <tr>
+                    <td style="padding-right: 10px;">
+                      <a href="tel:+4989200000830"
+                        style="display: inline-block; background-color: #f0ebe4; border-radius: 50%; width: 44px; height: 44px; text-align: center; line-height: 44px; text-decoration: none; font-size: 18px;">📞</a>
+                    </td>
+                    <td>
+                      <a href="https://wa.me/4989200000830"
+                        style="display: inline-block; background-color: #25D366; border-radius: 50%; width: 44px; height: 44px; text-align: center; line-height: 44px; text-decoration: none; font-size: 18px;">💬</a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <!-- Testsieger badge -->
+              <td style="vertical-align: middle; text-align: right;">
+                <div style="display: inline-block; border: 1px solid #e8ddd0; border-radius: 8px; padding: 10px 14px; text-align: left;">
+                  <p style="margin: 0 0 2px 0; font-size: 13px; font-weight: 700; color: #3D2B1F; white-space: nowrap;">Testsieger <span style="color: #B5A184;">DIE WELT</span></p>
+                  <p style="margin: 0; font-size: 11px; color: #888; line-height: 1.4;">Ausgezeichnet für Preis,<br>Qualität &amp; Kundenservice</p>
+                </div>
+              </td>
             </tr>
           </table>
+        </td>
+      </tr>
+      <!-- Stats row -->
+      <tr>
+        <td style="background: #f9f6f2; border-top: 1px solid #e8ddd0;">
+          <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+            <tr>
+              <td style="padding: 14px 0; text-align: center; width: 33%; border-right: 1px solid #e8ddd0;">
+                <p style="margin: 0; font-size: 13px; color: #555; line-height: 1.4; text-align: center;">Über 20 Jahre<br>Erfahrung</p>
+              </td>
+              <td style="padding: 14px 0; text-align: center; width: 33%; border-right: 1px solid #e8ddd0;">
+                <p style="margin: 0; font-size: 13px; color: #555; line-height: 1.4; text-align: center;">60.000+<br>betreute Einsätze</p>
+              </td>
+              <td style="padding: 14px 0; text-align: center; width: 33%;">
+                <p style="margin: 0; font-size: 13px; color: #555; line-height: 1.4; text-align: center;">Persönlicher<br>Ansprechpartner, 7&nbsp;Tage/Woche</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <!-- Media logos -->
+      <tr>
+        <td style="background: #ffffff; border-top: 1px solid #e8ddd0; padding: 12px 24px; text-align: center;">
+          <p style="margin: 0; font-size: 12px; color: #bbb; letter-spacing: 0.04em; text-align: center;">DIE WELT &nbsp;·&nbsp; Frankfurter Allgemeine &nbsp;·&nbsp; ARD &nbsp;·&nbsp; NDR &nbsp;·&nbsp; SAT.1 &nbsp;·&nbsp; Bild der Frau</p>
         </td>
       </tr>
     </table>

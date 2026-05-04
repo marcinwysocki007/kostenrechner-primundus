@@ -48,12 +48,12 @@ export function getEmailLayout({ content, preheader, siteUrl }: EmailLayoutProps
 
     .email-header {
       background: #ffffff;
-      padding: 30px 30px 20px 30px;
-      border-bottom: 4px solid #B5A184;
+      padding: 24px 40px 20px 40px;
+      border-bottom: 1px solid #f0ebe4;
     }
 
     .email-header img {
-      max-width: 180px;
+      max-width: 160px;
       height: auto;
       display: block;
     }
@@ -66,7 +66,8 @@ export function getEmailLayout({ content, preheader, siteUrl }: EmailLayoutProps
     }
 
     .email-content {
-      padding: 40px 30px;
+      padding: 40px 40px 32px;
+      text-align: left;
     }
 
     .email-content p {
@@ -74,6 +75,7 @@ export function getEmailLayout({ content, preheader, siteUrl }: EmailLayoutProps
       font-size: 16px;
       line-height: 1.6;
       color: #333333;
+      text-align: left;
     }
 
     .email-content ul, .email-content ol {
@@ -259,9 +261,9 @@ export function getEmailLayout({ content, preheader, siteUrl }: EmailLayoutProps
         <td align="center">
           <div class="email-container">
             <div class="email-header">
-              <img src="${baseUrl}/images/Primundus-Logo_V6.png" alt="Primundus Logo" style="max-width: 180px; height: auto; display: block;" />
+              <img src="${baseUrl}/images/Primundus-Logo_V6.png" alt="Primundus Logo" style="max-width: 160px; height: auto; display: block;" />
             </div>
-            <div class="email-content">
+            <div class="email-content" style="text-align:left;">
               ${content}
             </div>
             <div class="email-footer">
