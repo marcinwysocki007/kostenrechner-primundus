@@ -147,7 +147,7 @@ function buildContractHtml(lead: any): string {
     ${p('6. Die Abwesenheit des LE am Leistungsort bis zu 7 Tagen lässt den Vertragsbestand unberührt. Ab dem 8. Tag ruht der Vertrag kostenlos für den AG bis die Betreuung wieder fortgesetzt wird.')}
     ${p('7. Bei Beschwerden über die Erbringung der vereinbarten Leistungen ist der DL unverzüglich zu informieren. Eine Minderung kann nur erfolgen, wenn der Minderungsgrund innerhalb von 5 Tagen angezeigt wurde und zwischen den Parteien unstrittig ist.')}
     ${h2('§ 4 Vergütung')}
-    ${p(`1. Der DL erhält für die vereinbarten Dienstleistungen eine Vergütung von <strong>${fieldBlank(tagessatzFmt)} pro Tag (Tagessatz)</strong> zzgl. einer Reisekostenpauschale i.H.v. EUR 125,00 pro Fahrt. An gesetzlichen Feiertagen gilt der doppelte Tagessatz (§ 4.8). In den Monaten Juli und August wird ein Sommerzuschlag von EUR 200,00/Monat berechnet (§ 4.9).`)}
+    ${p(`1. Der DL erhält für die vereinbarten Dienstleistungen eine Vergütung von <strong>${fieldBlank(tagessatzFmt)} pro Tag (Tagessatz)</strong> zzgl. einer Reisekostenpauschale i.H.v. EUR 125,00 pro Fahrt.`)}
     ${p('2. Die Vergütung wird berechnet ab dem Tag der Ankunft der Betreuungsperson am Leistungsort.')}
     ${p('3. Beginnt oder endet die Vertragslaufzeit im Laufe eines Monats, erfolgt eine anteilige Berechnung der vereinbarten Vergütung.')}
     ${p('4. Die Rechnungen werden monatlich zum 15. ausgestellt. Der Rechnungsbetrag ist bis spätestens 7 Tage nach Erhalt zu überweisen.')}
