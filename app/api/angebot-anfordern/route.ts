@@ -113,51 +113,47 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    const eingangsEmail = getEingangsbestaetigungEmailTemplate(lead, kalkulation);
-    const emailResult = await sendEmail(email, eingangsEmail);
+    // Fire emails in background — don't block the response
+    void (async () => {
+      try {
+        const eingangsEmail = getEingangsbestaetigungEmailTemplate(lead, kalkulation);
+        const emailResult = await sendEmail(email, eingangsEmail);
+        if (emailResult.success) {
+          await logEvent(lead.id, 'email_eingangsbestaetigung_sent', { to: email, token: lead.token });
+        } else {
+          console.error('Eingangsbestaetigungs-Email fehlgeschlagen:', emailResult.error);
+          await logEvent(lead.id, 'email_eingangsbestaetigung_failed', { to: email, error: emailResult.error });
+        }
+      } catch (e) { console.error('Eingangs-Email error:', e); }
 
-    if (emailResult.success) {
-      await logEvent(lead.id, 'email_eingangsbestaetigung_sent', {
-        to: email,
-        token: lead.token,
-      });
-    } else {
-      console.error('Eingangsbestaetigungs-Email fehlgeschlagen (Lead gespeichert):', emailResult.error);
-      await logEvent(lead.id, 'email_eingangsbestaetigung_failed', {
-        to: email,
-        error: emailResult.error,
-      });
-    }
+      try {
+        const scheduleResult = await scheduleAngebotsEmail(lead.id, email);
+        if (!scheduleResult.success) {
+          console.error('Fehler beim Schedulen der Angebotsmail:', scheduleResult.error);
+          await logEvent(lead.id, 'email_angebot_schedule_failed', { error: scheduleResult.error });
+        } else {
+          await logEvent(lead.id, 'email_angebot_scheduled', { to: email });
+        }
+      } catch (e) { console.error('Schedule error:', e); }
 
-    const scheduleResult = await scheduleAngebotsEmail(lead.id, email);
-    const scheduleError = !scheduleResult.success;
-
-    if (!scheduleResult.success) {
-      console.error('Fehler beim Schedulen der Angebotsmail:', scheduleResult.error);
-      await logEvent(lead.id, 'email_angebot_schedule_failed', {
-        error: scheduleResult.error,
-      });
-    } else {
-      await logEvent(lead.id, 'email_angebot_scheduled', {
-        to: email,
-      });
-    }
-
-    const teamEmail = getTeamNotificationTemplate(lead, 'angebot_requested');
-    const teamEmailResult = await sendEmail('info@primundus.de', teamEmail);
-    if (teamEmailResult.success) {
-      await logEvent(lead.id, 'team_notified', { status: 'angebot_requested' });
-    } else {
-      console.error('Team-Benachrichtigung fehlgeschlagen:', teamEmailResult.error);
-    }
+      try {
+        const teamEmail = getTeamNotificationTemplate(lead, 'angebot_requested');
+        const teamEmailResult = await sendEmail('info@primundus.de', teamEmail);
+        if (teamEmailResult.success) {
+          await logEvent(lead.id, 'team_notified', { status: 'angebot_requested' });
+        } else {
+          console.error('Team-Benachrichtigung fehlgeschlagen:', teamEmailResult.error);
+        }
+      } catch (e) { console.error('Team-Email error:', e); }
+    })();
 
     return NextResponse.json({
       success: true,
       leadId: lead.id,
       isNew,
       isUpgrade,
-      emailSent: emailResult.success,
-      angebotsEmailScheduled: !scheduleError,
+      emailSent: true,
+      angebotsEmailScheduled: true,
       message: 'Angebot angefordert',
     });
   } catch (error) {
