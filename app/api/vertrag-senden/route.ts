@@ -100,7 +100,7 @@ function buildContractHtml(lead: any): string {
   const logoHeader = `
     <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:22pt;padding-bottom:12pt;border-bottom:2.5px solid #5C4A32;">
       <div style="font-size:18pt;font-weight:bold;color:#5C4A32;letter-spacing:2px;">PRIMUNDUS</div>
-      <div style="font-size:10pt;color:#7a6a56;text-align:right;">Datum:<br/>${today}</div>
+      <div style="font-size:10pt;color:#7a6a56;text-align:right;">Datum: ${today}</div>
     </div>`;
 
   const p1 = page(`

@@ -53,7 +53,7 @@ export function ContractDocument({
           <div className="header-logo">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/Primundus-Logo_V6.png" alt="Primundus" style={{ height: '42px', objectFit: 'contain' }} />
-            <div className="header-date">Datum:<br />{today}</div>
+            <div className="header-date">Datum: {today}</div>
           </div>
           <div className="title-block">
             <h1 className="doc-title">Dienstleistungsvertrag</h1>
