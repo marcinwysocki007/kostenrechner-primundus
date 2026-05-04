@@ -1339,10 +1339,13 @@ export default function LeadDetailPage() {
           : 'auf unbestimmte Zeit';
         const today = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
         const agName = [vertragVars.ag_anrede, vertragVars.ag_vorname, vertragVars.ag_nachname].filter(Boolean).join(' ');
-        const agAdresse = [vertragVars.ag_street, [vertragVars.ag_zip, vertragVars.ag_city].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+        const agStreet = vertragVars.ag_street || '';
+        const agZipCity = [vertragVars.ag_zip, vertragVars.ag_city].filter(Boolean).join(' ');
+        const agAdresse = [agStreet, agZipCity].filter(Boolean).join(', ');
         const leAbweichend = vertragVars.le_abweichend === 'ja' && (vertragVars.le_vorname || vertragVars.le_nachname);
         const leName = [vertragVars.le_anrede, vertragVars.le_vorname, vertragVars.le_nachname].filter(Boolean).join(' ');
-        const leAdresse = [vertragVars.le_street, [vertragVars.le_zip, vertragVars.le_city].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+        const leStreet = vertragVars.le_street || '';
+        const leZipCity = [vertragVars.le_zip, vertragVars.le_city].filter(Boolean).join(' ');
         const missingFields: string[] = [];
         if (!agName.trim()) missingFields.push('AG Name');
         if (!agAdresse.trim()) missingFields.push('AG Anschrift');
@@ -1532,8 +1535,8 @@ export default function LeadDetailPage() {
                 </div>
                 <div id="contract-print">
                   <ContractDocument
-                    agName={agName} agAdresse={agAdresse} agEmail={vertragVars.ag_email} agTelefon={vertragVars.ag_telefon}
-                    leAbweichend={!!leAbweichend} leName={leName} leAdresse={leAdresse} leAnrede={vertragVars.le_anrede}
+                    agName={agName} agStreet={agStreet} agZipCity={agZipCity} agEmail={vertragVars.ag_email} agTelefon={vertragVars.ag_telefon}
+                    leAbweichend={!!leAbweichend} leName={leName} leStreet={leStreet} leZipCity={leZipCity} leAnrede={vertragVars.le_anrede}
                     vertragsBeginn={vertragsBeginnFmt} vertragsDauer={vertragsDauerFmt}
                     tagessatzFmt={tagessatzFmt} ortUnterzeichnung={vertragVars.ort_unterzeichnung} today={today}
                   />

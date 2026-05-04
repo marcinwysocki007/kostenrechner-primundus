@@ -2,14 +2,14 @@
 
 /* ── Contract Document ───────────────────────────────────────── */
 export function ContractDocument({
-  agName, agAdresse, agEmail, agTelefon,
-  leAbweichend, leName, leAdresse, leAnrede,
+  agName, agStreet, agZipCity, agEmail, agTelefon,
+  leAbweichend, leName, leStreet, leZipCity, leAnrede,
   vertragsBeginn, vertragsDauer, tagessatzFmt, ortUnterzeichnung, today
 }: any) {
   return (
     <>
       <style>{`
-        .contract { font-family: 'Times New Roman', Times, serif; font-size: 12pt; color: #1a1a1a; line-height: 1.65; }
+        .contract { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; font-size: 12pt; color: #1a1a1a; line-height: 1.65; }
         .contract-page { max-width: 210mm; min-height: 297mm; margin: 0 auto; padding: 20mm 24mm 20mm 27mm; background: white; box-shadow: 0 4px 32px rgba(0,0,0,0.12); margin-bottom: 20px; display: flex; flex-direction: column; box-sizing: border-box; }
         @media print {
           @page { size: A4; margin: 20mm 25mm 20mm 27mm; }
@@ -26,7 +26,7 @@ export function ContractDocument({
         .contract .party-block { border: 1px solid #d4c5af; border-left: 3px solid #5C4A32; background: #faf8f5; padding: 10pt 14pt; margin-bottom: 6pt; border-radius: 0 3pt 3pt 0; }
         .contract .party-label { font-size: 8.5pt; color: #7a6a56; margin-bottom: 4pt; font-style: italic; text-transform: uppercase; letter-spacing: 0.5px; }
         .contract .party-name { font-weight: bold; font-size: 13pt; margin-bottom: 3pt; color: #1a1a1a; }
-        .contract .party-detail { font-size: 11pt; color: #444; line-height: 1.45; }
+        .contract .party-detail { font-size: 12pt; color: #444; line-height: 1.45; }
         .contract .party-center { text-align: center; font-size: 11pt; color: #666; margin: 5pt 0; }
         .contract .party-and { text-align: center; font-weight: bold; font-size: 13pt; color: #5C4A32; margin: 8pt 0; letter-spacing: 1px; }
         .contract h2 { font-size: 12pt; font-weight: bold; color: #5C4A32; margin: 18pt 0 6pt 0; padding-bottom: 3pt; border-bottom: 1px solid #e8ddd0; }
@@ -63,7 +63,8 @@ export function ContractDocument({
           <div className="party-block">
             <div className="party-label">Auftraggeber (AG)</div>
             <div className="party-name">{agName || <span style={{color:'#bbb',fontWeight:'normal',fontStyle:'italic'}}>Name nicht hinterlegt</span>}</div>
-            {agAdresse && <div className="party-detail">{agAdresse}</div>}
+            {agStreet && <div className="party-detail">{agStreet}</div>}
+            {agZipCity && <div className="party-detail">{agZipCity}</div>}
             {agEmail && <div className="party-detail">{agEmail}</div>}
             {agTelefon && <div className="party-detail">{agTelefon}</div>}
           </div>
@@ -71,10 +72,16 @@ export function ContractDocument({
           <div className="party-block">
             <div className="party-label">Leistungsempfänger (LE){!leAbweichend && ' — identisch mit AG'}</div>
             {leAbweichend && leName ? (
-              <><div className="party-name">{leName}</div>{leAdresse && <div className="party-detail">{leAdresse}</div>}</>
+              <>
+                <div className="party-name">{leName}</div>
+                {leStreet && <div className="party-detail">{leStreet}</div>}
+                {leZipCity && <div className="party-detail">{leZipCity}</div>}
+              </>
             ) : (
               <div className="party-detail" style={{color:'#999',fontStyle:'italic',paddingTop:'3pt'}}>
-                {agName || 'wie Auftraggeber'}{agAdresse ? `, ${agAdresse}` : ''}
+                <div>{agName || 'wie Auftraggeber'}</div>
+                {agStreet && <div>{agStreet}</div>}
+                {agZipCity && <div>{agZipCity}</div>}
               </div>
             )}
           </div>
@@ -127,16 +134,18 @@ export function ContractDocument({
           <p>6. Die Abwesenheit des LE am Leistungsort bis zu 7 Tagen lässt den Vertragsbestand unberührt. Ab dem 8. Tag ruht der Vertrag kostenlos für den AG bis die Betreuung wieder fortgesetzt wird.</p>
           <p>7. Bei Beschwerden über die Erbringung der vereinbarten Leistungen ist der DL unverzüglich zu informieren. Eine Minderung kann nur erfolgen, wenn der Minderungsgrund innerhalb von 5 Tagen angezeigt wurde und zwischen den Parteien unstrittig ist.</p>
           <h2>§ 4 Vergütung</h2>
-          <p>1. Der DL erhält für die vereinbarten Dienstleistungen eine Vergütung von <strong><span className="field-blank">{tagessatzFmt}</span> pro Tag (Tagessatz)</strong> zzgl. Reisekostenvergütung (für den internationalen Flugverkehr nach/von Mallorca). Im Falle einer unvorhersehbaren Verkürzung der Einsatzzeit auf Wunsch des AG wird eine Reisekostenvergütungspauschale von EUR 125,00 berechnet.</p>
+          <p>1. Der DL erhält für die vereinbarten Dienstleistungen eine Vergütung von <strong><span className="field-blank">{tagessatzFmt}</span> pro Tag (Tagessatz)</strong> zzgl. Reisekostenvergütung i.H.v. EUR 125,00 pro Fahrt. An gesetzlichen Feiertagen gilt der doppelte Tagessatz (§ 4.8). In den Monaten Juli und August wird ein Sommerzuschlag von EUR 200,00/Monat berechnet (§ 4.9).</p>
           <p>2. Die Vergütung wird berechnet ab dem Tag der Ankunft der Betreuungsperson am Leistungsort.</p>
           <p>3. Beginnt oder endet die Vertragslaufzeit im Laufe eines Monats, erfolgt eine anteilige Berechnung der vereinbarten Vergütung.</p>
           <p>4. Die Rechnungen werden monatlich zum 15. ausgestellt. Der Rechnungsbetrag ist bis spätestens 7 Tage nach Erhalt zu überweisen.</p>
           <p>5. Sollten sich die Betreuungsbedürfnisse der zu betreuenden Person ändern, behält sich der DL das Recht zur Anpassung des Honorars vor.</p>
           <p>6. Im Falle einer Arbeitsunfähigkeit der Betreuungsperson wird für die Zeit der Verhinderung kein Honorar berechnet.</p>
           <p>7. Der Anreisetag und der Abreisetag werden als volle Dienstleistungstage berechnet. Bei einem Personalwechsel wird der volle Tagessatz für beide Betreuungspersonen berechnet.</p>
-          <p>8. Nach der aktuellen Gesetzeslage ist auf die Dienstleistungen des DL keine gesetzliche Mehrwertsteuer zu entrichten.</p>
-          <p>9. Bei Zahlungsverzug hat der DL das Recht, Dritte mit der Rechnungsabwicklung zu beauftragen und Verzugszinsen in Höhe von 5 Prozent p. a. über dem jeweiligen Basiszinssatz zu berechnen.</p>
-          <p>10. Der DL ist berechtigt, bei ausbleibender Zahlung die Betreuungsperson ersatzlos abreisen zu lassen und den Vertrag außerordentlich fristlos zu kündigen.</p>
+          <p>8. An gesetzlichen Feiertagen wird der doppelte Tagessatz berechnet.</p>
+          <p>9. In den Sommermonaten Juli und August wird ein monatlicher Aufschlag von 200,00 € (Sommerzuschlag) berechnet.</p>
+          <p>10. Nach der aktuellen Gesetzeslage ist auf die Dienstleistungen des DL keine gesetzliche Mehrwertsteuer zu entrichten.</p>
+          <p>11. Bei Zahlungsverzug hat der DL das Recht, Dritte mit der Rechnungsabwicklung zu beauftragen und Verzugszinsen in Höhe von 5 Prozent p. a. über dem jeweiligen Basiszinssatz zu berechnen.</p>
+          <p>12. Der DL ist berechtigt, bei ausbleibender Zahlung die Betreuungsperson ersatzlos abreisen zu lassen und den Vertrag außerordentlich fristlos zu kündigen.</p>
           <div className="contract-page-spacer" /><div className="page-footer"><span>PRIMUNDUS | www.primundus.de</span><span>Seite 3 von 8</span></div>
         </div>
 
