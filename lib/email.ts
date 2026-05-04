@@ -448,22 +448,20 @@ export function getAngebotsEmailTemplate(
     anredeText = 'Guten Tag';
   }
 
-  const resendBanner = isResend ? `
-    <div style="background-color: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px 16px; margin-bottom: 28px;">
-      <p style="margin: 0; font-size: 13px; color: #888; line-height: 1.5;">
+  const introText = isResend
+    ? 'wie gewünscht senden wir Ihnen Ihr persönliches Angebot noch einmal zu.'
+    : 'vielen Dank für Ihre Anfrage.';
+
+  const resendNotice = isResend ? `
+    <div style="background-color: #f9f6f2; border: 1px solid #e8ddd0; border-radius: 6px; padding: 12px 16px; margin-top: 32px;">
+      <p style="margin: 0; font-size: 13px; color: #9a8a73; line-height: 1.5;">
         ℹ️ Diese E-Mail wurde auf Ihre Bitte hin erneut zugesendet und enthält Ihr aktuelles persönliches Angebot.
       </p>
     </div>
   ` : '';
 
-  const introText = isResend
-    ? 'wie gewünscht senden wir Ihnen Ihr persönliches Angebot noch einmal zu.'
-    : 'vielen Dank für Ihre Anfrage.';
-
   const content = `
-    <p style="font-size: 18px; line-height: 1.6; color: #333; margin-bottom: 25px;">${anredeText},</p>
-
-    ${resendBanner}
+    <p style="font-size: 16px; line-height: 1.6; color: #333; margin-bottom: 25px;">${anredeText},</p>
 
     <p style="font-size: 16px; line-height: 1.7; color: #555; margin-bottom: 20px;">${introText}</p>
 
@@ -479,11 +477,52 @@ export function getAngebotsEmailTemplate(
 
     <p style="font-size: 16px; line-height: 1.7; color: #555; margin-bottom: 20px;">Wenn alles für Sie passt, benötigen wir lediglich eine kurze Bestätigung von Ihnen. Dann starten wir direkt mit der Auswahl passender Betreuungskräfte und bereiten parallel alle organisatorischen und vertraglichen Modalitäten vor.</p>
 
-    <div class="info-box" style="background-color: #E8F5E9; border-left: 4px solid #4CAF50; padding: 20px; margin: 25px 0; border-radius: 6px;">
+    <div style="background-color: #E8F5E9; border-left: 4px solid #4CAF50; padding: 20px; margin: 25px 0; border-radius: 6px;">
       <p style="color: #555; font-size: 15px; margin: 0; line-height: 1.6;">Für Sie bleibt selbstverständlich alles <strong>unverbindlich</strong>, bis Sie sich für eine passende Betreuungskraft entscheiden und diese anreist.</p>
     </div>
 
-    <p style="font-size: 16px; line-height: 1.7; color: #555; margin-top: 30px;">Mit freundlichen Grüßen<br><strong style="color: #3D2B1F;">Ilka Wysocki</strong></p>
+    <!-- Ilka CTA -->
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin: 35px 0; border: 1px solid #e8ddd0; border-radius: 10px; overflow: hidden;">
+      <tr>
+        <td style="padding: 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+            <tr>
+              <td style="vertical-align: top; padding-right: 20px; width: 90px;">
+                <img src="${baseUrl}/images/ilka-wysocki_pm-mallorca.webp" alt="Ilka Wysocki" width="80" height="80"
+                  style="border-radius: 50%; width: 80px; height: 80px; object-fit: cover; display: block; border: 2px solid #B5A184;" />
+              </td>
+              <td style="vertical-align: top;">
+                <p style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #3D2B1F;">Ilka Wysocki</p>
+                <p style="margin: 0 0 14px 0; font-size: 13px; color: #9a8a73;">Gründerin & Geschäftsführerin, Primundus</p>
+                <p style="margin: 0 0 16px 0; font-size: 15px; color: #555; line-height: 1.6;">
+                  Haben Sie Fragen zu Ihrem Angebot? Ich bin persönlich für Sie da.
+                </p>
+                <table cellpadding="0" cellspacing="0" role="presentation">
+                  <tr>
+                    <td style="padding-right: 10px; padding-bottom: 8px;">
+                      <a href="tel:+4989200000830"
+                        style="display: inline-block; background-color: #3D2B1F; color: #ffffff; text-decoration: none; padding: 9px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; white-space: nowrap;">
+                        📞 +49 89 200 000 830
+                      </a>
+                    </td>
+                    <td style="padding-bottom: 8px;">
+                      <a href="https://wa.me/4989200000830"
+                        style="display: inline-block; background-color: #25D366; color: #ffffff; text-decoration: none; padding: 9px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; white-space: nowrap;">
+                        💬 WhatsApp
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <p style="font-size: 16px; line-height: 1.7; color: #555; margin-top: 10px;">Mit freundlichen Grüßen<br><strong style="color: #3D2B1F;">Ilka Wysocki</strong></p>
+
+    ${resendNotice}
   `;
 
   const preheader = isResend
