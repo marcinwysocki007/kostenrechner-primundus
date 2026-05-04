@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { sendEmail, getVertragEmailTemplate } from '@/lib/email';
 import { logEvent } from '@/lib/lead-management';
+import { existsSync } from 'fs';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -247,11 +250,54 @@ function buildContractHtml(lead: any): string {
   <style>
     @page { size: A4; margin: 0; }
     body { margin: 0; padding: 20px; background: #f0ece6; }
-    @media print { body { background: white; padding: 0; } }
+    @media print {
+      body { background: white; padding: 0; }
+      body > div { page-break-after: always; break-after: page; box-shadow: none !important; margin-bottom: 0 !important; }
+      body > div:last-child { page-break-after: avoid; break-after: avoid; }
+    }
   </style>
 </head>
 <body>${p1}${p2}${p3}${p4}${p5}${p6}${p7}</body>
 </html>`;
+}
+
+async function htmlToPdf(html: string): Promise<Buffer> {
+  const isDev = process.env.NODE_ENV === 'development';
+
+  let executablePath: string;
+  let launchArgs: string[];
+
+  if (isDev) {
+    const macChrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+    const macChromium = '/Applications/Chromium.app/Contents/MacOS/Chromium';
+    if (existsSync(macChrome)) executablePath = macChrome;
+    else if (existsSync(macChromium)) executablePath = macChromium;
+    else throw new Error('Chrome nicht gefunden. Bitte Google Chrome installieren.');
+    launchArgs = ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'];
+  } else {
+    executablePath = await chromium.executablePath();
+    launchArgs = chromium.args;
+  }
+
+  const browser = await puppeteer.launch({
+    args: launchArgs,
+    executablePath,
+    headless: true,
+  });
+
+  try {
+    const page = await browser.newPage();
+    await page.emulateMediaType('print');
+    await page.setContent(html, { waitUntil: 'networkidle0' });
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      margin: { top: '0', right: '0', bottom: '0', left: '0' },
+    });
+    return Buffer.from(pdfBuffer);
+  } finally {
+    await browser.close();
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -312,15 +358,16 @@ export async function POST(request: NextRequest) {
       leName: leIsAbweichend ? leName : undefined,
     });
 
-    // Build contract HTML attachment
+    // Build contract HTML and convert to PDF
     const contractHtml = buildContractHtml(lead);
-    const contractFilename = `Dienstleistungsvertrag_${(lead.nachname || lead.vorname || 'Primundus').replace(/\s+/g, '_')}.html`;
+    const contractPdf = await htmlToPdf(contractHtml);
+    const contractFilename = `Dienstleistungsvertrag_${(lead.nachname || lead.vorname || 'Primundus').replace(/\s+/g, '_')}.pdf`;
 
-    // Send email with attachment
+    // Send email with PDF attachment
     const emailResult = await sendEmail(
       lead.email,
       emailTemplate,
-      [{ filename: contractFilename, content: contractHtml, contentType: 'text/html' }]
+      [{ filename: contractFilename, content: contractPdf, contentType: 'application/pdf' }]
     );
 
     if (emailResult.success) {

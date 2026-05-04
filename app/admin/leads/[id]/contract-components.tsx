@@ -311,7 +311,7 @@ export function EmailPreviewFrame({ lead, agName, versandBetreff, versandAnschre
         </div>
       </div>
       <div className="max-w-[600px] mx-auto mt-3 flex items-center gap-2 text-xs text-gray-500 px-1">
-        <span>📎</span><span>Anhang: <strong>Dienstleistungsvertrag_{lead.nachname || lead.vorname || 'Primundus'}.html</strong></span>
+        <span>📎</span><span>Anhang: <strong>Dienstleistungsvertrag_{lead.nachname || lead.vorname || 'Primundus'}.pdf</strong></span>
       </div>
     </div>
   );
