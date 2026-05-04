@@ -288,7 +288,7 @@ async function htmlToPdf(html: string): Promise<Buffer> {
   try {
     const page = await browser.newPage();
     await page.emulateMediaType('print');
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+    await page.setContent(html, { waitUntil: 'domcontentloaded', timeout: 10000 });
     const pdfBuffer = await page.pdf({
       format: 'A4',
       printBackground: true,
