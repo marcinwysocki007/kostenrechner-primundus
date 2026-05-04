@@ -1045,7 +1045,7 @@ function EmailPreviewFrame({ lead, agName, versandBetreff, versandAnschreiben, v
         <div className="px-10 py-8">
           <p className="text-base text-gray-800 mb-5">{anredeText},</p>
           <div className="text-[15px] text-gray-600 leading-relaxed mb-6">
-            {bodyText.split('\n\n').map((para, i) => (
+            {bodyText.split('\n\n').map((para: string, i: number) => (
               <p key={i} className="mb-4">{para}</p>
             ))}
           </div>
