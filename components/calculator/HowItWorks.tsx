@@ -68,10 +68,10 @@ export function HowItWorks() {
             </div>
             <div className="pt-0.5 md:pt-5 flex-1">
               <h3 className="font-bold text-[17px] md:text-[18px] lg:text-[20px] mb-1.5 md:mb-2.5 text-[#3D3D3D] leading-snug md:text-center">
-                Passende Pflegekräfte erhalten
+                Pflegekräfte sofort ansehen & einladen
               </h3>
               <p className="text-[14px] md:text-[15px] lg:text-[16px] leading-[1.55] text-[#5A5A5A] mb-2.5 md:text-center">
-                Auf Wunsch übermitteln wir Ihnen direkt passende Pflegekräfte-Profile – ohne weiteren Aufwand für Sie.
+                Sie sehen sofort passende Pflegekräfte-Profile und können diese direkt einladen – ohne Wartezeit, ohne weiteren Aufwand.
               </p>
               <span className="inline-flex items-center gap-1.5 bg-[#E8F5E9] text-[#2E7D32] px-3 py-1.5 rounded-lg text-xs font-semibold md:mx-auto">
                 <Check className="w-3.5 h-3.5" strokeWidth={2.5} />

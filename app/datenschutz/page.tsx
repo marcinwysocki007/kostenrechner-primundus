@@ -32,10 +32,11 @@ export default function DatenschutzPage() {
               <p>Landsberger Str. 155</p>
               <p>80687 München</p>
               <p className="mt-4">Primundus ist eine Marke von:</p>
-              <p>Poznanska 21/48</p>
+              <p>VITANAS CARE LTD HOME SK</p>
+              <p>ul. Poznańska 21/48</p>
               <p>00-685 Warszawa</p>
-              <p>NIP 7011172300</p>
-              <p>REGON 526823071</p>
+              <p>NIP (Tax ID): 7011301447</p>
+              <p>REGON: 544074862</p>
               <p className="mt-4">
                 Telefon: <a href="tel:+4989200000830" className="text-blue-600 hover:underline">+49 89 200 000 830</a>
               </p>
@@ -60,15 +61,18 @@ export default function DatenschutzPage() {
               <li>Verwendeter Browser und ggf. das Betriebssystem Ihres Rechners</li>
             </ul>
 
-            <h3 className="text-xl font-semibold mb-3 text-gray-900">2.2 Nutzung des Kostenrechners</h3>
+            <h3 className="text-xl font-semibold mb-3 text-gray-900">2.2 Nutzung des Kostenrechners & Kontoerstellung</h3>
             <p className="text-gray-700 leading-relaxed mb-4">
               Bei der Nutzung unseres Kostenrechners erheben wir folgende Daten:
             </p>
             <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-700">
               <li>Ihre Angaben zur Pflegesituation (Pflegegrad, Wohnsituation, benötigte Leistungen)</li>
-              <li>Kontaktdaten (Name, E-Mail-Adresse, Telefonnummer) - nur wenn Sie ein Angebot anfordern</li>
-              <li>Berechnete Kostenkalkulation</li>
+              <li>Kontaktdaten (Name, E-Mail-Adresse, Telefonnummer)</li>
+              <li>Berechnete Kostenkalkulation und individuelle Zuschüsse</li>
             </ul>
+            <p className="text-gray-700 leading-relaxed">
+              Mit dem Abschluss des Formulars wird automatisch ein persönliches Kundenkonto angelegt. Über dieses Konto können Sie Ihr individuelles Angebot einsehen, passende Pflegekräfte-Profile ansehen und Betreuungskräfte direkt einladen. Der Zugang erfolgt über einen Ihnen per E-Mail zugesandten persönlichen Einmal-Link (Magic Link) — es ist kein separates Passwort erforderlich.
+            </p>
           </section>
 
           <section>
@@ -79,7 +83,10 @@ export default function DatenschutzPage() {
             <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-700">
               <li>Bereitstellung und technische Administration der Website</li>
               <li>Berechnung einer individuellen Kostenkalkulation für Ihre Pflegesituation</li>
-              <li>Zusendung der Kalkulationsergebnisse per E-Mail (auf Wunsch)</li>
+              <li>Erstellung und Verwaltung Ihres persönlichen Kundenkontos</li>
+              <li>Bereitstellung Ihres individuellen Angebots inkl. passender Pflegekräfte-Profile</li>
+              <li>Ermöglichung der direkten Einladung von Betreuungskräften über Ihr Konto</li>
+              <li>Zusendung des persönlichen Zugangs-Links (Magic Link) und Kalkulationsergebnissen per E-Mail</li>
               <li>Kontaktaufnahme für ein persönliches Beratungsgespräch (auf Wunsch)</li>
               <li>Statistische Auswertung zur Verbesserung unseres Angebots</li>
             </ul>

@@ -36,13 +36,13 @@ export default function ImpressumPage() {
               <div className="border-t pt-6">
                 <h3 className="text-lg font-semibold mb-3 text-gray-900">Rechtlicher Sitz</h3>
                 <p className="text-gray-700 font-semibold mb-2">Primundus ist eine Marke von:</p>
-                <p className="text-gray-700">Vitanas Group spolka zoo</p>
-                <p className="text-gray-700">Poznanska 21/48</p>
+                <p className="text-gray-700">VITANAS CARE LTD HOME SK</p>
+                <p className="text-gray-700">ul. Poznańska 21/48</p>
                 <p className="text-gray-700">00-685 Warszawa</p>
                 <p className="text-gray-700">Polen</p>
                 <div className="mt-4 space-y-1">
-                  <p className="text-gray-700">NIP (Steuer-ID): 7011172300</p>
-                  <p className="text-gray-700">REGON: 526823071</p>
+                  <p className="text-gray-700">NIP (Tax ID): 7011301447</p>
+                  <p className="text-gray-700">REGON: 544074862</p>
                 </div>
               </div>
             </div>
@@ -87,8 +87,8 @@ export default function ImpressumPage() {
             <h2 className="text-2xl font-bold mb-4 text-gray-900">Registereintrag</h2>
             <div className="space-y-2 text-gray-700">
               <p>Registergericht: Warszawa</p>
-              <p>REGON-Nummer: 526823071</p>
-              <p>NIP (Steuer-ID): 7011172300</p>
+              <p>REGON: 544074862</p>
+              <p>NIP (Tax ID): 7011301447</p>
             </div>
           </section>
 

@@ -117,7 +117,7 @@ function buildContractHtml(lead: any): string {
       : partyBlock('Leistungsempfänger (LE) — identisch mit AG', leIsAbweichend ? leName : (agName || 'wie Auftraggeber'), [agStreet, agZipCity].filter(Boolean), true)}
     <p style="text-align:center;font-size:11pt;color:#666;margin:5pt 0;">im Folgenden <strong>Leistungsempfänger (LE)</strong> genannt</p>
     <p style="text-align:center;font-weight:bold;font-size:13pt;color:#5C4A32;margin:8pt 0;letter-spacing:1px;">— und —</p>
-    ${partyBlock('Dienstleister (DL)', 'PRIMUNDUS Deutschland', ['VITANAS GROUP sp. z o. o · Poznanska 21/48, 00-685 Warszawa', 'Stat. Register: REGON 526823071'])}
+    ${partyBlock('Dienstleister (DL)', 'PRIMUNDUS Deutschland', ['VITANAS CARE LTD HOME SK · ul. Poznańska 21/48, 00-685 Warszawa', 'NIP: 7011301447 · REGON: 544074862'])}
     <p style="text-align:center;font-size:11pt;color:#666;margin:5pt 0;">Im Folgenden <strong>Dienstleister (DL oder PRIMUNDUS)</strong> genannt.</p>
   `, '1 von 8');
 
@@ -183,7 +183,7 @@ function buildContractHtml(lead: any): string {
   const p5 = page(`
     ${h2('§ 8 Widerrufsrecht')}
     ${p('1. Dem AG steht das Recht zu, diesen Vertrag ohne Angabe von Gründen innerhalb von 14 Tagen in Textform zu widerrufen. Die Widerrufsfrist beginnt mit Unterzeichnung dieses Vertrages. Widerruf an:')}
-    ${p('Primundus Deutschland (VITANAS GROUP sp. z o. o), Poznanska 21/48, 00-685 Warszawa')}
+    ${p('Primundus Deutschland (VITANAS CARE LTD HOME SK), ul. Poznańska 21/48, 00-685 Warszawa')}
     ${p('2. Im Falle eines wirksamen Widerrufs sind die beiderseits empfangenen Leistungen zurückzugewähren. Der AG ist verpflichtet, dem DL Wertersatz zu leisten (z. B. entstandene Reisekosten, pauschal EUR 125,00).')}
     ${p('3. Der AG bestätigt durch Unterzeichnung, dass er ausdrücklich verlangt, dass die Leistungserbringung vor Ablauf der Widerrufsfrist beginnt.')}
     ${h2('§ 9 Einhaltung der gültigen Sozialversicherungspflichten')}

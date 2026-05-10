@@ -1,5 +1,5 @@
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://primundus.de';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kostenrechner.primundus.de';
 
   const staticPages = [
     '',

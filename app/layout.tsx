@@ -9,23 +9,25 @@ import Script from 'next/script';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://primundus.de'),
-  title: 'PRIMUNDUS - 24-Stunden-Pflege Kostenrechner',
-  description: 'Berechnen Sie in nur 2 Minuten die Kosten für 24-Stunden-Pflege. Vom Testsieger mit Preisgarantie.',
+  metadataBase: new URL('https://kostenrechner.primundus.de'),
+  title: '24h-Pflege Kostenrechner 2026 — Eigenanteil berechnen | Primundus',
+  description: '24h-Pflegekosten sofort berechnen: Eigenanteil nach Pflegegrad, Pflegegeld und Entlastungsbudget eingerechnet. Kostenlos & anonym — Ergebnis in 2 Minuten.',
+  alternates: {
+    canonical: 'https://kostenrechner.primundus.de',
+  },
+  robots: { index: false, follow: true },
   openGraph: {
-    images: [
-      {
-        url: '/images/primundus_logo_header.webp',
-      },
-    ],
+    title: '24h-Pflege Kostenrechner 2026 | Primundus',
+    description: '24h-Pflegekosten sofort berechnen — kostenlos & unverbindlich. Pflegegeld & Zuschüsse werden automatisch abgezogen.',
+    url: 'https://kostenrechner.primundus.de',
+    siteName: 'Primundus',
+    locale: 'de_DE',
+    type: 'website',
+    images: [{ url: '/images/primundus_logo_header.webp' }],
   },
   twitter: {
     card: 'summary_large_image',
-    images: [
-      {
-        url: '/images/primundus_logo_header.webp',
-      },
-    ],
+    images: [{ url: '/images/primundus_logo_header.webp' }],
   },
 };
 
@@ -37,6 +39,39 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body className={inter.className}>
+        <Script
+          id="schema-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([
+              {
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                "name": "24h-Pflege Kostenrechner",
+                "url": "https://kostenrechner.primundus.de",
+                "description": "Kostenloser Online-Rechner für 24-Stunden-Pflege: Eigenanteil nach Pflegegrad, Pflegegeld und Entlastungsbudget berechnen.",
+                "applicationCategory": "HealthApplication",
+                "operatingSystem": "Web",
+                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+                "provider": {
+                  "@type": "Organization",
+                  "name": "Primundus",
+                  "url": "https://primundus.de",
+                  "telephone": "+4989200000830",
+                  "logo": "https://primundus.de/images/primundus_logo_header.webp"
+                }
+              },
+              {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  { "@type": "ListItem", "position": 1, "name": "Primundus", "item": "https://primundus.de/" },
+                  { "@type": "ListItem", "position": 2, "name": "Kostenrechner 24h-Pflege", "item": "https://kostenrechner.primundus.de/" }
+                ]
+              }
+            ]),
+          }}
+        />
         <Script
           id="gtm"
           strategy="afterInteractive"

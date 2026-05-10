@@ -32,25 +32,59 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mb-8">
-          <h4 className="text-[18px] font-bold mb-4 uppercase tracking-wider text-gray-400">
-            Kontakt
-          </h4>
-          <ul className="space-y-3">
-            <li>
-              <a href="tel:+4989200000830" className="text-[20px] font-bold text-white hover:text-gray-300 transition-colors">
-                089 200 000 830
-              </a>
-            </li>
-            <li>
-              <a href="mailto:info@primundus.de" className="text-[16px] text-gray-300 hover:text-white transition-colors">
-                info@primundus.de
-              </a>
-            </li>
-            <li className="text-[14px] text-gray-400 pt-2">
-              Mo-So: 8-20 Uhr
-            </li>
-          </ul>
+        <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h4 className="text-[18px] font-bold mb-4 uppercase tracking-wider text-gray-400">
+              Kontakt
+            </h4>
+            <ul className="space-y-3">
+              <li>
+                <a href="tel:+4989200000830" className="text-[20px] font-bold text-white hover:text-gray-300 transition-colors">
+                  089 200 000 830
+                </a>
+              </li>
+              <li>
+                <a href="mailto:info@primundus.de" className="text-[16px] text-gray-300 hover:text-white transition-colors">
+                  info@primundus.de
+                </a>
+              </li>
+              <li className="text-[14px] text-gray-400 pt-2">
+                Mo-So: 8-20 Uhr
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-[18px] font-bold mb-4 uppercase tracking-wider text-gray-400">
+              Mehr von Primundus
+            </h4>
+            <ul className="space-y-2">
+              <li>
+                <a href="https://primundus.de/24-stunden-pflege/" className="text-[15px] text-gray-300 hover:text-white transition-colors">
+                  Was ist 24h-Pflege?
+                </a>
+              </li>
+              <li>
+                <a href="https://primundus.de/kosten/" className="text-[15px] text-gray-300 hover:text-white transition-colors">
+                  Kosten & Finanzierung
+                </a>
+              </li>
+              <li>
+                <a href="https://primundus.de/pflegegrade/" className="text-[15px] text-gray-300 hover:text-white transition-colors">
+                  Pflegegrade erklärt
+                </a>
+              </li>
+              <li>
+                <a href="https://primundus.de/ratgeber/" className="text-[15px] text-gray-300 hover:text-white transition-colors">
+                  Ratgeber 24h-Pflege
+                </a>
+              </li>
+              <li>
+                <a href="https://primundus.de/beratungsgespraech/" className="text-[15px] text-[#E76F63] hover:text-[#f08880] transition-colors font-semibold">
+                  → Persönliche Beratung anfragen
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className="border-t border-gray-600 pt-6">

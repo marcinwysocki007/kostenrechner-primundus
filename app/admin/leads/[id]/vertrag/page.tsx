@@ -766,8 +766,8 @@ function ContractDocument({
           <div className="party-block">
             <div className="party-label">Dienstleister (DL)</div>
             <div className="party-name">PRIMUNDUS Deutschland</div>
-            <div className="party-detail">VITANAS GROUP sp. z o. o · Poznanska 21/48, 00-685 Warszawa</div>
-            <div className="party-detail">Stat. Register: REGON 526823071</div>
+            <div className="party-detail">VITANAS CARE LTD HOME SK · ul. Poznańska 21/48, 00-685 Warszawa</div>
+            <div className="party-detail">NIP: 7011301447 · REGON: 544074862</div>
           </div>
           <p className="party-center">Im Folgenden <strong>Dienstleister (DL oder PRIMUNDUS)</strong> genannt.</p>
 
@@ -865,7 +865,7 @@ function ContractDocument({
         <div className="contract-page">
           <h2>§ 8 Widerrufsrecht</h2>
           <p>1. Dem AG steht das Recht zu, diesen Vertrag ohne Angabe von Gründen innerhalb von 14 Tagen in Textform zu widerrufen. Die Widerrufsfrist beginnt mit Unterzeichnung dieses Vertrages. Widerruf an:</p>
-          <p style={{ marginLeft: '15pt' }}>Primundus Deutschland (VITANAS GROUP sp. z o. o), Poznanska 21/48, 00-685 Warszawa</p>
+          <p style={{ marginLeft: '15pt' }}>Primundus Deutschland (VITANAS CARE LTD HOME SK), ul. Poznańska 21/48, 00-685 Warszawa</p>
           <p>2. Im Falle eines wirksamen Widerrufs sind die beiderseits empfangenen Leistungen zurückzugewähren. Der AG ist verpflichtet, dem DL Wertersatz zu leisten (z. B. entstandene Reisekosten, pauschal EUR 125,00).</p>
           <p>3. Der AG bestätigt durch Unterzeichnung, dass er ausdrücklich verlangt, dass die Leistungserbringung vor Ablauf der Widerrufsfrist beginnt.</p>
 
@@ -1079,7 +1079,7 @@ function EmailPreviewFrame({ lead, agName, versandBetreff, versandAnschreiben, v
         {/* Footer */}
         <div className="px-10 py-4 border-t border-[#e8ddd0] text-center" style={{ backgroundColor: '#f7f4f0' }}>
           <p className="text-xs text-gray-400 leading-relaxed">
-            PRIMUNDUS Deutschland (VITANAS GROUP sp. z o. o) · Poznanska 21/48, 00-685 Warszawa<br />
+            PRIMUNDUS Deutschland (VITANAS CARE LTD HOME SK) · ul. Poznańska 21/48, 00-685 Warszawa<br />
             Telefon: 089 200 000 830 · E-Mail: info@primundus.de · www.primundus.de
           </p>
         </div>
