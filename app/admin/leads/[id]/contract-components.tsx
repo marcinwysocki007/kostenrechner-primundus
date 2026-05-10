@@ -198,7 +198,7 @@ export function ContractDocument({
           <p>PRIMUNDUS ist verantwortlich für den Schutz, Sicherheit und Verwaltung Ihrer Daten. Kontakt: <strong>datenschutz@primundus.de</strong></p>
           <p>Die angegebenen personenbezogenen Daten, insbesondere Name, Anschrift, Telefonnummer, Bankdaten, Gesundheitsdaten und familiäre Daten, werden auf Grundlage der geltenden EU-DSGVO ausschließlich zum Zwecke der Durchführung des entstehenden Vertragsverhältnisses erhoben und verarbeitet.</p>
           <p>Ihre Vertragsdaten speichern wir gemäß den gesetzlichen Vorgaben. Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Sperrung, Einschränkung der Verarbeitung, Widerspruch und Datenübertragbarkeit sowie das Recht auf Beschwerde bei einer zuständigen Aufsichtsbehörde.</p>
-          <p>Unsere Datenschutzerklärung finden Sie unter www.primundus-mallorca.de.</p>
+          <p>Unsere Datenschutzerklärung finden Sie unter www.primundus.de.</p>
           <p style={{marginTop:'14pt',fontWeight:'bold'}}>Einwilligung zur Datennutzung zu Werbezwecken:</p>
           <p>Ich bin damit einverstanden, dass PRIMUNDUS mir postalisch / per E-Mail / Telefon / Fax Informationen und Angebote zum Zwecke der Eigenwerbung zusendet.</p>
           <div className="sig-row" style={{marginTop:'40pt'}}>

@@ -208,7 +208,7 @@ function buildContractHtml(lead: any): string {
     ${p('PRIMUNDUS ist verantwortlich für den Schutz, Sicherheit und Verwaltung Ihrer Daten. Kontakt: <strong>datenschutz@primundus.de</strong>')}
     ${p('Die angegebenen personenbezogenen Daten, insbesondere Name, Anschrift, Telefonnummer, Bankdaten, Gesundheitsdaten und familiäre Daten, werden auf Grundlage der geltenden EU-DSGVO ausschließlich zum Zwecke der Durchführung des entstehenden Vertragsverhältnisses erhoben und verarbeitet.')}
     ${p('Ihre Vertragsdaten speichern wir gemäß den gesetzlichen Vorgaben. Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Sperrung, Einschränkung der Verarbeitung, Widerspruch und Datenübertragbarkeit sowie das Recht auf Beschwerde bei einer zuständigen Aufsichtsbehörde.')}
-    ${p('Unsere Datenschutzerklärung finden Sie unter www.primundus-mallorca.de.')}
+    ${p('Unsere Datenschutzerklärung finden Sie unter www.primundus.de.')}
     <p style="margin:14pt 0 0 0;font-weight:bold;">Einwilligung zur Datennutzung zu Werbezwecken:</p>
     ${p('Ich bin damit einverstanden, dass PRIMUNDUS mir postalisch / per E-Mail / Telefon / Fax Informationen und Angebote zum Zwecke der Eigenwerbung zusendet.')}
     ${sigRow([{ label: 'Ort, Datum, Unterschrift Auftraggeber<br/>(bzw. Bevollmächtigter oder gesetzlicher Vertreter)' }])}
