@@ -201,6 +201,7 @@ export function MultiStepForm() {
     acceptPrivacy: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showMatching, setShowMatching] = useState(false);
@@ -332,6 +333,8 @@ export function MultiStepForm() {
       return;
     }
 
+    // Sofortiger visueller Übergang – APIs laufen im Hintergrund
+    setShowLoading(true);
     setIsSubmitting(true);
 
     try {
@@ -404,12 +407,14 @@ export function MultiStepForm() {
             conversion_value: kalkulation.bruttopreis,
           });
         }
+        setShowLoading(false);
         setShowSuccess(true);
       } else {
         throw new Error('Fehler beim Anfordern des Angebots');
       }
     } catch (error) {
       console.error('Error:', error);
+      setShowLoading(false);
       alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
     } finally {
       setIsSubmitting(false);
@@ -467,6 +472,60 @@ export function MultiStepForm() {
   }
 
   // Success-Ansicht nach erfolgreichem Submit
+  if (showLoading) {
+    return (
+      <div id="calculator-form" className="pt-2 pb-6 scroll-mt-24 lg:scroll-mt-32 lg:pt-0 max-w-md sm:max-w-[95%] xl:max-w-[1800px] 2xl:max-w-[2000px] mx-auto px-0 sm:px-4">
+        <style>{`
+          @keyframes kmBounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-12px)} }
+          @keyframes kmFloat  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+        `}</style>
+        <div
+          className="rounded-2xl overflow-hidden shadow-xl"
+          style={{ background: 'linear-gradient(135deg,#6B5444 0%,#8B7355 55%,#A18973 100%)', minHeight: '340px' }}
+        >
+          <div className="flex flex-col items-center justify-center gap-7 px-8 py-14 text-center">
+            {/* Wordmark */}
+            <div className="flex items-center gap-2.5" style={{ animation: 'kmFloat 3s ease-in-out infinite' }}>
+              <img src="/images/primundus_logo_header.webp" alt="Primundus" className="h-8 brightness-0 invert" />
+            </div>
+
+            {/* Cards stack illustration */}
+            <div className="relative w-40 h-16 mx-auto">
+              {[0, 1, 2].map(i => (
+                <div
+                  key={i}
+                  className="absolute inset-x-0 h-10 rounded-xl bg-white/20 border border-white/30"
+                  style={{
+                    top: `${i * 6}px`,
+                    transform: `rotate(${(i - 1) * 3}deg)`,
+                    animation: `kmFloat ${2.5 + i * 0.4}s ease-in-out ${i * 0.3}s infinite`,
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Headline */}
+            <div>
+              <h3 className="text-white font-bold text-xl mb-1.5">Ihr Angebot wird vorbereitet</h3>
+              <p className="text-white/70 text-sm">Passende Pflegekräfte werden für Sie ausgewählt…</p>
+            </div>
+
+            {/* Bouncing dots */}
+            <div className="flex items-center gap-2.5">
+              {[0, 1, 2].map(i => (
+                <div
+                  key={i}
+                  className="w-2.5 h-2.5 rounded-full bg-white"
+                  style={{ animation: `kmBounce 1.4s ease-in-out ${i * 0.22}s infinite` }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (showSuccess) {
     return (
       <div id="calculator-form" className="pt-2 pb-6 scroll-mt-24 lg:scroll-mt-32 lg:pt-0 max-w-md sm:max-w-[95%] xl:max-w-[1800px] 2xl:max-w-[2000px] mx-auto px-0 sm:px-4">
@@ -1073,14 +1132,7 @@ export function MultiStepForm() {
                     : 'bg-[#E5E3DF] text-[#8B8B8B] cursor-not-allowed opacity-60'
                 }`}
               >
-                {isSubmitting ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <span>Wird gesendet...</span>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  </div>
-                ) : (
-                  <span>Jetzt {matchedCount} Pflegekräfte ansehen →</span>
-                )}
+                Angebot &amp; Pflegekräfte ansehen →
               </button>
               <p className="text-center text-xs text-[#8B8B8B]">100% kostenfrei &amp; unverbindlich</p>
             </div>
