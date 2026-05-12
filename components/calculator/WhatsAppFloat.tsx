@@ -19,7 +19,7 @@ export function WhatsAppFloat() {
   }, []);
 
   return (
-    <div className="md:hidden fixed bottom-5 right-4 z-50 flex flex-col items-end gap-2">
+    <div className="md:hidden fixed bottom-20 right-4 z-50 flex flex-col items-end gap-2">
       <style>{`
         @keyframes fadeInUp {
           from { opacity: 0; transform: translateY(6px); }
