@@ -260,10 +260,16 @@ export function MultiStepForm() {
 
     if (currentStep === 9) {
       setShowMatching(true);
+      setTimeout(() => {
+        document.getElementById('calculator-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
       return;
     }
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
+      setTimeout(() => {
+        document.getElementById('calculator-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
     } else if (currentStep === 10) {
       await handleSubmit();
     }
@@ -685,10 +691,10 @@ export function MultiStepForm() {
   }
 
   const btnClass = (isSelected: boolean) =>
-    `w-full relative rounded-full px-6 py-4 border-[1.5px] transition-all duration-300 text-left shadow-sm hover:shadow-md ${
+    `w-full relative rounded-full px-6 py-4 border-2 transition-all duration-300 text-left shadow-sm hover:shadow-md ${
       isSelected
         ? 'border-[#8B7355] bg-[#8B7355]/5 ring-1 ring-[#8B7355]/20 shadow-md'
-        : 'border-[#ADADAD] bg-white hover:border-[#8B7355] hover:bg-gray-50'
+        : 'border-[#B8B0A6] bg-white hover:border-[#8B7355] hover:bg-gray-50'
     }`;
 
   return (
@@ -1058,7 +1064,7 @@ export function MultiStepForm() {
                           setErrors({ ...errors, name: '' });
                         }}
                         className={`w-full px-4 py-2.5 text-base border-2 rounded-full focus:outline-none focus:ring-1 focus:ring-[#8B7355]/40 focus:border-[#8B7355] ${
-                          errors.name ? 'border-red-500' : 'border-[#E5E3DF]'
+                          errors.name ? 'border-red-500' : 'border-[#B8B0A6]'
                         }`}
                         placeholder="Vollständiger Name"
                       />
@@ -1074,7 +1080,7 @@ export function MultiStepForm() {
                           setErrors({ ...errors, email: '' });
                         }}
                         className={`w-full px-4 py-2.5 text-base border-2 rounded-full focus:outline-none focus:ring-1 focus:ring-[#8B7355]/40 focus:border-[#8B7355] ${
-                          errors.email ? 'border-red-500' : 'border-[#E5E3DF]'
+                          errors.email ? 'border-red-500' : 'border-[#B8B0A6]'
                         }`}
                         placeholder="E-Mail-Adresse"
                       />
@@ -1088,7 +1094,7 @@ export function MultiStepForm() {
                         type="tel"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full px-4 py-2.5 text-base border-2 border-[#E5E3DF] rounded-full focus:outline-none focus:ring-1 focus:ring-[#8B7355]/40 focus:border-[#8B7355]"
+                        className="w-full px-4 py-2.5 text-base border-2 border-[#B8B0A6] rounded-full focus:outline-none focus:ring-1 focus:ring-[#8B7355]/40 focus:border-[#8B7355]"
                         placeholder="Telefonnummer (optional)"
                       />
                     </div>
@@ -1103,7 +1109,7 @@ export function MultiStepForm() {
                           setFormData({ ...formData, acceptPrivacy: e.target.checked });
                           setErrors({ ...errors, acceptPrivacy: '' });
                         }}
-                        className="mt-0.5 w-4 h-4 text-[#8B7355] border-2 border-[#E5E3DF] rounded focus:ring-2 focus:ring-[#8B7355]/30"
+                        className="mt-0.5 w-4 h-4 text-[#8B7355] border-2 border-[#B8B0A6] rounded focus:ring-2 focus:ring-[#8B7355]/30"
                       />
                       <span className="text-[13px] text-[#3D3D3D] leading-snug">
                         Ich akzeptiere die{' '}
