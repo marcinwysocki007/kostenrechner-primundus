@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useMemo } from "react";
+import { flushSync } from "react-dom";
 import { useCalculator, formatEuro } from "@/lib/calculator-context";
 import { CircleCheck as CheckCircle2, Phone } from "lucide-react";
 import Image from "next/image";
@@ -339,9 +340,8 @@ export function MultiStepForm() {
       return;
     }
 
-    // Sofortiger visueller Übergang – APIs laufen im Hintergrund
-    setShowLoading(true);
-    setIsSubmitting(true);
+    // Sofortiger visueller Übergang – synchron gerendert bevor fetch startet
+    flushSync(() => setShowLoading(true));
 
     try {
       // Erstelle formularDaten für die Berechnung
@@ -422,8 +422,6 @@ export function MultiStepForm() {
       console.error('Error:', error);
       setShowLoading(false);
       alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -1131,9 +1129,9 @@ export function MultiStepForm() {
             <div className="flex flex-col gap-2.5">
               <button
                 onClick={handleNext}
-                disabled={!canProceed() || isSubmitting}
+                disabled={!canProceed()}
                 className={`w-full py-4 font-bold text-base rounded-full transition-all duration-200 ${
-                  canProceed() && !isSubmitting
+                  canProceed()
                     ? 'bg-[#E76F63] hover:bg-[#D65E52] text-white shadow-lg hover:shadow-xl cursor-pointer'
                     : 'bg-[#E5E3DF] text-[#8B8B8B] cursor-not-allowed opacity-60'
                 }`}
@@ -1154,9 +1152,9 @@ export function MultiStepForm() {
               )}
               <button
                 onClick={handleNext}
-                disabled={!canProceed() || isSubmitting}
+                disabled={!canProceed()}
                 className={`${currentStep === 1 ? 'w-full' : ''} px-9 py-3.5 font-bold text-base rounded-full transition-all duration-200 ${
-                  canProceed() && !isSubmitting
+                  canProceed()
                     ? 'bg-[#E76F63] hover:bg-[#D65E52] text-white shadow-lg hover:shadow-xl cursor-pointer'
                     : 'bg-[#E5E3DF] text-[#8B8B8B] cursor-not-allowed opacity-60'
                 }`}
