@@ -439,7 +439,7 @@ export function MultiStepForm() {
       case 7: return "Deutschkenntnisse der Pflegekraft";
       case 8: return "Führerschein gewünscht?";
       case 9: return "Geschlecht der Pflegekraft";
-      case 10: return "Jetzt Angebot & Pflegekräfte ansehen";
+      case 10: return "Jetzt Angebot & Pflegekräfte anzeigen";
       default: return "";
     }
   };
@@ -1138,7 +1138,7 @@ export function MultiStepForm() {
                     : 'bg-[#E5E3DF] text-[#8B8B8B] cursor-not-allowed opacity-60'
                 }`}
               >
-                Angebot &amp; Pflegekräfte ansehen →
+                Angebot & Pflegekräfte anzeigen →
               </button>
               <p className="text-center text-xs text-[#8B8B8B]">100% kostenfrei &amp; unverbindlich</p>
             </div>
