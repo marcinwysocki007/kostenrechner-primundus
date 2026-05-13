@@ -201,7 +201,6 @@ export function MultiStepForm() {
     email: '',
     acceptPrivacy: '',
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
