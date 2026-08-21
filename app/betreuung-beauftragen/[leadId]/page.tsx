@@ -182,12 +182,12 @@ export default function BetreuungBeauftragen({ params }: { params: { leadId: str
           <div className="flex items-center justify-between px-5 py-4 border-b-2 border-[#B5A184]">
             <Image src="/images/primundus_logo_header.webp" alt="Primundus" width={150} height={42} className="h-7 w-auto object-contain" />
             <div className="flex items-center gap-2.5">
-              <Image src="/images/ilka-wysocki_pm-mallorca.webp" alt="Ilka Wysocki" width={32} height={32} className="w-8 h-8 rounded-full object-cover object-top border border-[#F0997B] hidden sm:block flex-shrink-0" />
+              <Image src="/images/marta-kapcio.jpg" alt="Marta Kapcio" width={32} height={32} className="w-8 h-8 rounded-full object-cover object-top border border-[#F0997B] hidden sm:block flex-shrink-0" />
               <div className="flex flex-col items-end">
                 <a href="tel:08920000830" className="flex items-center gap-1 text-[#8B6914] text-sm font-semibold">
                   <Phone className="w-3 h-3" /> 089 200 000 830
                 </a>
-                <span className="text-[10px] text-[#B5A184]">Ilka Wysocki · Mo–So 8–18 Uhr</span>
+                <span className="text-[10px] text-[#B5A184]">Marta Kapcio · Mo–So 8–18 Uhr</span>
               </div>
             </div>
           </div>
@@ -376,9 +376,9 @@ export default function BetreuungBeauftragen({ params }: { params: { leadId: str
         {/* ILKA */}
         <div className="bg-[#FFF8F6] rounded-2xl border border-[#F0C4B4] overflow-hidden shadow-sm mb-3">
           <div className="flex gap-3 p-4 items-start">
-            <Image src="/images/ilka-wysocki_pm-mallorca.webp" alt="Ilka Wysocki" width={44} height={44} className="w-11 h-11 rounded-full object-cover object-top border-2 border-[#F0997B] flex-shrink-0" />
+            <Image src="/images/marta-kapcio.jpg" alt="Marta Kapcio" width={44} height={44} className="w-11 h-11 rounded-full object-cover object-top border-2 border-[#F0997B] flex-shrink-0" />
             <div>
-              <div className="text-sm font-bold text-[#2D1F0F]">Ilka Wysocki</div>
+              <div className="text-sm font-bold text-[#2D1F0F]">Marta Kapcio</div>
               <div className="text-xs text-gray-400 mb-1">Ihre persönliche Beraterin · Mo–So, 8:00–20:00 Uhr</div>
               <a href="tel:08920000830" className="inline-flex items-center gap-1.5 text-[#E76F63] text-sm font-semibold">
                 <Phone className="w-3 h-3" /> 089 200 000 830

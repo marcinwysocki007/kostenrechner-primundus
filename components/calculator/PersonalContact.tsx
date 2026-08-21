@@ -20,15 +20,15 @@ export function PersonalContact() {
       <div className="flex flex-col md:flex-row items-center gap-4">
         <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-[#A89279]">
           <Image
-            src="/images/ilka-wysocki_pm-mallorca.webp"
-            alt="Ilka Wysocki"
+            src="/images/marta-kapcio.jpg"
+            alt="Marta Kapcio"
             width={96}
             height={96}
             className="object-cover"
           />
         </div>
         <div className="flex-1 min-w-0 text-center md:text-left">
-          <p className="font-bold text-[#3D3D3D] text-lg md:text-xl mb-3">Ilka Wysocki</p>
+          <p className="font-bold text-[#3D3D3D] text-lg md:text-xl mb-3">Marta Kapcio</p>
           <div className="flex flex-col gap-2">
             <a
               href="tel:+4989200000830"

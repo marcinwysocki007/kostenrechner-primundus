@@ -578,13 +578,13 @@ export function MultiStepForm() {
               </p>
               <div className="flex items-center gap-4">
                 <img
-                  src="/images/ilka-wysocki_pm-mallorca.webp"
-                  alt="Ilka Wysocki"
+                  src="/images/marta-kapcio.jpg"
+                  alt="Marta Kapcio"
                   className="w-16 h-16 rounded-full object-cover object-top flex-shrink-0"
                 />
                 <div className="flex-1 text-left">
                   <p className="text-sm font-semibold text-[#3D3D3D] mb-0.5">
-                    Ilka Wysocki
+                    Marta Kapcio
                   </p>
                   <p className="text-xs text-[#8B8B8B] mb-2">
                     Kundenberatung
@@ -1190,14 +1190,14 @@ export function MultiStepForm() {
         <div className="bg-[#F8F7F5] rounded-b-xl shadow-md overflow-hidden">
           <div className="flex items-center gap-4 px-5 pt-5 pb-4">
             <Image
-              src="/images/ilka-wysocki_pm-mallorca.webp"
-              alt="Ilka Wysocki"
+              src="/images/marta-kapcio.jpg"
+              alt="Marta Kapcio"
               width={60}
               height={60}
               className="rounded-full w-[60px] h-[60px] object-cover flex-shrink-0"
               style={{ objectPosition: '50% 20%' }}
             />
-            <p className="text-base font-bold text-[#3D2B1F]">Ilka Wysocki</p>
+            <p className="text-base font-bold text-[#3D2B1F]">Marta Kapcio</p>
           </div>
           <div className="flex flex-col gap-2.5 px-5 pb-5">
             <a

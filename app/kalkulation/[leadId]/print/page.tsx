@@ -141,7 +141,7 @@ export default function KalkulationPrintPage() {
             </div>
             <div style={{ textAlign: 'right', fontSize: '8pt', color: '#888', lineHeight: 1.6 }}>
               <div style={{ color: '#8B6914', fontWeight: 700, fontSize: '9pt' }}>089 200 000 830</div>
-              <div>Ilka Wysocki · Mo–So 8–18 Uhr</div>
+              <div>Marta Kapcio · Mo–So 8–18 Uhr</div>
             </div>
           </div>
         </div>
@@ -164,7 +164,7 @@ export default function KalkulationPrintPage() {
           <p style={{ marginBottom: '6pt' }}>{greeting},</p>
           <p style={{ marginBottom: '6pt' }}>vielen Dank für Ihre Anfrage. Gerne können wir die Betreuung übernehmen. Da unsere Betreuungskräfte direkt angestellt sind, kann die Betreuung bereits <strong>innerhalb von 4–7 Werktagen</strong> beginnen.</p>
           <p style={{ marginBottom: '6pt' }}>Unser nachfolgendes Angebot ist auf Ihre individuelle Situation zugeschnitten.</p>
-          <p>Ihre Ilka Wysocki</p>
+          <p>Ihre Marta Kapcio</p>
         </div>
 
         {/* MEDIA LOGOS */}
@@ -275,9 +275,9 @@ export default function KalkulationPrintPage() {
         {/* ILKA */}
         <div style={s.ilkaBox}>
           <div style={s.ilkaInner}>
-            <Image src="/images/ilka-wysocki_pm-mallorca.webp" alt="Ilka Wysocki" width={44} height={44} style={{ width: '34pt', height: '34pt', borderRadius: '50%', objectFit: 'cover', objectPosition: 'top', border: '1.5pt solid #F0997B', flexShrink: 0 }} />
+            <Image src="/images/marta-kapcio.jpg" alt="Marta Kapcio" width={44} height={44} style={{ width: '34pt', height: '34pt', borderRadius: '50%', objectFit: 'cover', objectPosition: 'top', border: '1.5pt solid #F0997B', flexShrink: 0 }} />
             <div>
-              <div style={{ fontSize: '10pt', fontWeight: 700, color: '#2D1F0F', marginBottom: '1pt' }}>Ilka Wysocki</div>
+              <div style={{ fontSize: '10pt', fontWeight: 700, color: '#2D1F0F', marginBottom: '1pt' }}>Marta Kapcio</div>
               <div style={{ fontSize: '8pt', color: '#aaa', marginBottom: '5pt' }}>Ihre persönliche Beraterin · Mo–So, 8:00–20:00 Uhr</div>
               <div style={{ fontSize: '9pt', fontWeight: 600, color: '#2D1F0F', marginBottom: '3pt' }}>Noch offene Fragen?</div>
               <div style={{ fontSize: '8.5pt', color: '#666', lineHeight: 1.5, marginBottom: '5pt' }}>Ich begleite Sie persönlich durch den gesamten Prozess – von der Auswahl der passenden Pflegekraft bis zum Start der Betreuung.</div>
