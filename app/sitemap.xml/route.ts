@@ -13,7 +13,6 @@ export async function GET() {
     '/arbeitszeiten-und-ruhezeiten-24-stunden-pflege',
     '/premium-polnische-pflegekraft',
     '/premium-ansatz',
-    '/24h-pflege-kostenrechner',
     '/pflege-infos',
     '/ratgeber/pflegegrade',
     '/ratgeber/pflegegrade/pflegegrad-vergleich',
